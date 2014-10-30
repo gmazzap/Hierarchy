@@ -73,8 +73,8 @@ but just the branches that make sense for current query.
 
 Note that array items are **not** file names, are **template hierarchy items**.
 
-Think at the array returned as a code representation of the template hierarchy graph on Codex:
-Hierarchy class returns an item for each box of the chart.
+Think at the array returned as a code representation of the [template hierarchy graph](http://wphierarchy.com/):
+Hierarchy  returns an item for each box of the chart.
 
 Array keys are the branches in Template hierarchy graph that makes sense for current query.
 
