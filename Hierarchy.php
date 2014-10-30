@@ -120,6 +120,7 @@ class Hierarchy {
         if ( ! is_object( $queried ) || empty( $queried ) ) {
             return $hierarchy;
         }
+        $vars = [ ];
         if ( in_array( $branch, [ 'tax', 'tag', 'category' ], TRUE ) && isset( $queried->term_id ) ) {
             $vars = [ $queried->slug, $queried->term_id, $queried->taxonomy ];
         } elseif ( $branch === 'author' && isset( $queried->user_nicename ) ) {
@@ -129,7 +130,7 @@ class Hierarchy {
         } elseif ( $branch === 'page' && isset( $queried->post_name ) ) {
             $vars = [ $queried->post_name, $queried->ID, NULL ];
         }
-        return $this->replaceBranchVars( $hierarchy, $vars );
+        return ! empty( $vars ) ? $this->replaceBranchVars( $hierarchy, $vars ) : $hierarchy;
     }
 
     private function getPostTypeArchiveBranches( array $tmpls ) {
