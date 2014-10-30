@@ -1,0 +1,33 @@
+{
+    "name": "gmazzap/hierarchy",
+    "description": "*Virtual* WordPress Template Hierarchy",
+    "keywords": ["wordpress"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Giuseppe Mazzapica",
+            "email": "giuseppe.mazzapica@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Giuseppe-Mazzapica/Hierarchy/issues",
+        "source": "https://github.com/Giuseppe-Mazzapica/Hierarchy"
+    },
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "10up/wp_mock": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "GM\\": ""
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GM\\Tests\\": "tests/src/"
+        }
+    }
+}
