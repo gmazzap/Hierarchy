@@ -156,7 +156,7 @@ e. g. `search`, `category`, `archive` and so on.
 The callback has to return a non-empty value to stop the function from being called for every item
 in the hierarchy array.
 
-If template is found (callback returns something not empty) `Hiearrchy::findTemplateUsing()` returns
+If template is found (callback returns something not empty) `Hierarchy::findTemplateUsing()` returns
 whatever is returned by callback, otherwise return `false`.
 
 
