@@ -68,8 +68,9 @@ adding a search query var: `http://example.com/category/uncategorized/?s=foo`, o
             )
     )
 
-So we have an **array representation of WordPress template hierarchy**, not *all* the template hierarchy,
-but just the branches that make sense for current query.
+So we have an **array representation of WordPress template hierarchy**.
+
+Or better, not *all* the template hierarchy, but just the *branches* that make sense for current query.
 
 Note that array items are **not** file names, are **template hierarchy items**.
 
