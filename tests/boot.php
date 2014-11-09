@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'GMHIERARCHYPATH' ) ) define( 'GMHIERARCHYPATH', dirname( dirname( __FILE__ ) ) );
+if ( ! defined('GMHIERARCHYPATH')) {
+    define('GMHIERARCHYPATH', dirname(dirname(__FILE__)));
+}
 
 require_once GMHIERARCHYPATH . '/vendor/autoload.php';
 
