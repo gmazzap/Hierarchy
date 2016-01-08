@@ -1,33 +1,46 @@
 {
-    "name": "gmazzap/hierarchy",
-    "description": "*Virtual* WordPress Template Hierarchy",
-    "keywords": ["wordpress"],
-    "license": "MIT",
-    "authors": [
+    "name":         "gmazzap/hierarchy",
+    "description":  "*Virtual* WordPress Template Hierarchy",
+    "keywords":     ["wordpress"],
+    "license":      "MIT",
+    "authors":      [
         {
-            "name": "Giuseppe Mazzapica",
+            "name":  "Giuseppe Mazzapica",
             "email": "giuseppe.mazzapica@gmail.com"
         }
     ],
-    "support": {
+    "support":      {
         "issues": "https://github.com/Giuseppe-Mazzapica/Hierarchy/issues",
         "source": "https://github.com/Giuseppe-Mazzapica/Hierarchy"
     },
-    "require": {
-        "php": ">=5.4"
+    "require":      {
+        "php": ">=5.5"
     },
-    "require-dev": {
-        "phpunit/phpunit": "3.7.*",
-        "10up/wp_mock": "dev-master"
+    "require-dev":  {
+        "phpunit/phpunit": "~4.8",
+        "brain/monkey":    "~1.2",
+        "gmazzap/andrew":  "~1.0",
+        "symfony/finder":  "~2.7.0"
     },
-    "autoload": {
+    "suggest": {
+        "symfony/finder": "Allows loading of templates using Symfony finder component."
+    },
+    "autoload":     {
         "psr-4": {
-            "GM\\": ""
+            "GM\\Hierarchy\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "GM\\Tests\\": "tests/src/"
+            "GM\\Hierarchy\\Tests\\": "tests/src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
         }
     }
 }
