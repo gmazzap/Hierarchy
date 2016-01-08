@@ -33,7 +33,10 @@
     "autoload-dev": {
         "psr-4": {
             "GM\\Hierarchy\\Tests\\": "tests/src/"
-        }
+        },
+        "files" : [
+            "./tests/stubs.php"
+        ]
     },
     "config": {
         "optimize-autoloader": true

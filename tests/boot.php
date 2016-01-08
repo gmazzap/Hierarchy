@@ -21,5 +21,3 @@ require_once $vendor.'autoload.php';
 unset($vendor);
 
 putenv('HIERARCHY_TESTS_BASEPATH='.__DIR__);
-
-require_once __DIR__.'/stubs.php';
