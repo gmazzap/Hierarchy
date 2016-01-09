@@ -27,6 +27,9 @@ class TestCase extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
         Monkey::setUpWP();
+        Monkey\Functions::when('trailingslashit')->alias(function ($str) {
+            return rtrim($str, '\\/').'/';
+        });
     }
 
     protected function tearDown()
