@@ -40,10 +40,10 @@ final class BaseTemplateFinder implements FinderInterface
      */
     public function __construct($subfolder = '', $extension = 'php')
     {
-        $sub = $subfolder ? DIRECTORY_SEPARATOR.trim($subfolder, '\\/') : '';
+        $sub = $subfolder ? trim($subfolder, '\\/') : '';
         $stylesheet = trailingslashit(get_stylesheet_directory());
         $template = trailingslashit(get_template_directory());
-        $folders = [$stylesheet().$sub];
+        $folders = [$stylesheet.$sub];
         ($stylesheet !== $template) and $folders[] = $template.$sub;
 
         $this->folders = new ArrayIterator($folders);
@@ -58,8 +58,9 @@ final class BaseTemplateFinder implements FinderInterface
         $found = '';
         $this->folders->rewind();
         while ($this->folders->valid() && $found === '') {
-            $path = $this->folders->current().DIRECTORY_SEPARATOR."{$template}.{$this->extension}";
+            $path = $this->folders->current()."/{$template}.{$this->extension}";
             $found = file_exists($path) ? $path : '';
+            $this->folders->next();
         }
 
         return $found;
