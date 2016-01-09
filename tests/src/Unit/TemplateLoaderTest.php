@@ -25,7 +25,6 @@ use Mockery;
  */
 class TemplateLoaderTest extends TestCase
 {
-
     public function testFoundIsCached()
     {
         $finder = Mockery::mock(FinderInterface::class);
@@ -153,5 +152,4 @@ class TemplateLoaderTest extends TestCase
 
         assertTrue($exit);
     }
-
 }

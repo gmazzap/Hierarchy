@@ -21,7 +21,6 @@ use GM\Hierarchy\Tests\TestCase;
  */
 final class SymfonyFinderAdapterTest extends TestCase
 {
-
     public function setUp()
     {
         parent::setUp();

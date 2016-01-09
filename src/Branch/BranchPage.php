@@ -41,7 +41,7 @@ final class BranchPage implements BranchInterface
         /** @var \WP_Post $post */
         $post = get_queried_object();
 
-        $post instanceof \WP_Post or $post = new \WP_Post((object)['ID' => 0]);
+        $post instanceof \WP_Post or $post = new \WP_Post((object) ['ID' => 0]);
         $pagename = get_query_var('pagename');
 
         if (empty($post->post_name) && empty($pagename)) {

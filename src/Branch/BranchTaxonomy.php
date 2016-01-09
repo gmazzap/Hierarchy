@@ -41,7 +41,7 @@ final class BranchTaxonomy implements BranchInterface
         /** @var \stdClass $term */
         $term = get_queried_object();
 
-        if ( ! isset($term->slug) || ! isset($term->taxonomy)) {
+        if (! isset($term->slug) || ! isset($term->taxonomy)) {
             return ['taxonomy'];
         }
 

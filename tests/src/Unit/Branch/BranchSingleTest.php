@@ -15,7 +15,6 @@ use GM\Hierarchy\Branch\BranchSingle;
 use GM\Hierarchy\Tests\TestCase;
 use Mockery;
 
-
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
@@ -23,10 +22,8 @@ use Mockery;
  */
 final class BranchSingleTest extends TestCase
 {
-
     public function testLeavesNoPost()
     {
-
         $post = Mockery::mock('\WP_Post');
         $post->ID = 0;
         $post->post_name = '';

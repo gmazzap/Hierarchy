@@ -17,7 +17,6 @@ namespace GM\Hierarchy\Branch;
  */
 final class BranchCategory implements BranchInterface
 {
-
     /**
      * @inheritdoc
      */
@@ -41,7 +40,7 @@ final class BranchCategory implements BranchInterface
     {
         /** @var \stdClass $term */
         $term = get_queried_object();
-        if ( ! isset($term->slug) || ! isset($term->term_id)) {
+        if (! isset($term->slug) || ! isset($term->term_id)) {
             return ['category'];
         }
 

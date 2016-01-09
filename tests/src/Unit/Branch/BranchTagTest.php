@@ -13,7 +13,6 @@ namespace GM\Hierarchy\Tests\Unit\Branch;
 use Brain\Monkey\Functions;
 use GM\Hierarchy\Branch\BranchTag;
 use GM\Hierarchy\Tests\TestCase;
-use Mockery;
 
 
 /**
@@ -23,7 +22,6 @@ use Mockery;
  */
 final class BranchTagTest extends TestCase
 {
-
     public function testLeavesNoTag()
     {
         Functions::when('get_queried_object')->justReturn();
@@ -34,7 +32,7 @@ final class BranchTagTest extends TestCase
 
     public function testLeaves()
     {
-        $tag = (object)['slug' => 'foo', 'term_id' => 123];
+        $tag = (object) ['slug' => 'foo', 'term_id' => 123];
         Functions::when('get_queried_object')->justReturn($tag);
 
         $branch = new BranchTag();

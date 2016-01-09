@@ -41,7 +41,7 @@ final class BranchTag implements BranchInterface
         /** @var \stdClass $term */
         $term = get_queried_object();
 
-        if ( ! isset($term->slug) || ! isset($term->term_id)) {
+        if (! isset($term->slug) || ! isset($term->term_id)) {
             return ['tag'];
         }
 

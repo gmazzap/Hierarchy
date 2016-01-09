@@ -20,16 +20,16 @@ namespace GM\Hierarchy\Finder;
 trait FindFirstTemplateTrait
 {
     /**
-     * @param  array  $templates
-     * @param  string $type
+     * @param  array       $templates
+     * @param  string      $type
      * @return string|bool
      * @see \GM\Hierarchy\Finder\FinderInterface::findFirst()
      */
     public function findFirst(array $templates, $type)
     {
         $found = '';
-        while ( ! empty($templates) && $found === '') {
-            $found = $this->find(array_shift($templates), $type) ? : '';
+        while (! empty($templates) && $found === '') {
+            $found = $this->find(array_shift($templates), $type) ?: '';
         }
 
         return $found;

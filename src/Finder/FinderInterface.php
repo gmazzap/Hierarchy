@@ -17,7 +17,6 @@ namespace GM\Hierarchy\Finder;
  */
 interface FinderInterface
 {
-
     /**
      * Receives
      * - as first argument template name (no extension, no folder) something like

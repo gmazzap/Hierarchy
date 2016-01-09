@@ -10,7 +10,6 @@
 
 namespace GM\Hierarchy;
 
-use GM\Hierarchy\Finder\MultiFinderInterface;
 
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
@@ -19,14 +18,13 @@ use GM\Hierarchy\Finder\MultiFinderInterface;
  */
 interface TemplateLoaderInterface
 {
-
     /**
      * Find a template for the given WP_Query.
      * If no WP_Query provided, global \WP_Query is used.
      * By default, found template passes through "{$type}_template" filter.
      *
-     * @param \WP_Query $query
-     * @param bool      $filters Pass the found template through filter?
+     * @param  \WP_Query $query
+     * @param  bool      $filters Pass the found template through filter?
      * @return string
      */
     public function find(\WP_Query $query = null, $filters = true);
@@ -42,5 +40,4 @@ interface TemplateLoaderInterface
      * @param bool           $exit    Exit the request after having included the template?
      */
     public function load(\WP_Query $query = null, $filters = true, $exit = false);
-
 }

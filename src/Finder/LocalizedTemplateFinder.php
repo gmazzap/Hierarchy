@@ -10,7 +10,6 @@
 
 namespace GM\Hierarchy\Finder;
 
-use ArrayIterator;
 
 /**
  * Search templates looking for "localized" folders.
@@ -35,7 +34,6 @@ use ArrayIterator;
  */
 final class LocalizedTemplateFinder implements FinderInterface
 {
-
     use FindFirstTemplateTrait;
 
     /**
@@ -53,7 +51,7 @@ final class LocalizedTemplateFinder implements FinderInterface
      */
     public function __construct(FinderInterface $finder = null)
     {
-        $this->finder = $finder ? : new BaseTemplateFinder();
+        $this->finder = $finder ?: new BaseTemplateFinder();
         $locale = get_locale();
         if (! $locale || ! is_string($locale)) {
             return;
@@ -75,8 +73,8 @@ final class LocalizedTemplateFinder implements FinderInterface
             return $this->finder->find($template, $type);
         }
 
-        $templates = array_map(function($folder) use($template) {
-            return $folder . '/' . $template;
+        $templates = array_map(function ($folder) use ($template) {
+            return $folder.'/'.$template;
         }, $this->folders);
 
         $templates[] = $template;

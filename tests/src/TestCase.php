@@ -22,7 +22,6 @@ use Andrew\Proxy;
  */
 class TestCase extends PHPUnit_Framework_TestCase
 {
-
     protected function setUp()
     {
         parent::setUp();
@@ -50,8 +49,8 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $var
-     * @param object $object
+     * @param  string $var
+     * @param  object $object
      * @return mixed
      */
     protected function getPrivateVar($var, $object)
@@ -62,8 +61,8 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $var
-     * @param object $object
+     * @param  string $var
+     * @param  object $object
      * @return mixed
      */
     protected function getPrivateStaticVar($var, $object)
@@ -74,14 +73,13 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $method
-     * @param object $object
-     * @param array  $args
+     * @param  string $method
+     * @param  object $object
+     * @param  array  $args
      * @return mixed
      */
     protected function callPrivateFunc($method, $object, $args = [])
     {
         return call_user_func_array([new Proxy($object), $method], $args);
     }
-
 }

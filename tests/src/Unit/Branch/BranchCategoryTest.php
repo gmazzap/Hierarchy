@@ -13,7 +13,6 @@ namespace GM\Hierarchy\Tests\Unit\Branch;
 use Brain\Monkey\Functions;
 use GM\Hierarchy\Branch\BranchCategory;
 use GM\Hierarchy\Tests\TestCase;
-use Mockery;
 
 
 /**
@@ -23,7 +22,6 @@ use Mockery;
  */
 final class BranchCategoryTest extends TestCase
 {
-
     public function testLeavesNoCategory()
     {
         Functions::when('get_queried_object')->justReturn();
@@ -34,7 +32,7 @@ final class BranchCategoryTest extends TestCase
 
     public function testLeaves()
     {
-        $category = (object)['slug' => 'foo', 'term_id' => 123];
+        $category = (object) ['slug' => 'foo', 'term_id' => 123];
         Functions::when('get_queried_object')->justReturn($category);
 
         $branch = new BranchCategory();

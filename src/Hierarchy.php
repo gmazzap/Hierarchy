@@ -10,7 +10,6 @@
 
 namespace GM\Hierarchy;
 
-
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
@@ -18,7 +17,6 @@ namespace GM\Hierarchy;
  */
 final class Hierarchy
 {
-
     /**
      * @var array
      */
@@ -72,7 +70,7 @@ final class Hierarchy
     /**
      * Get hierarchy.
      *
-     * @param  bool $flat
+     * @param  bool  $flat
      * @return array
      */
     public function get($flat = false)
@@ -100,8 +98,8 @@ final class Hierarchy
     private function parse(array $branches)
     {
         /** @var \WP_Query $query */
-        $query = $this->query ? : $GLOBALS['wp_query'];
-        if (!$query instanceof \WP_Query) {
+        $query = $this->query ?: $GLOBALS['wp_query'];
+        if (! $query instanceof \WP_Query) {
             return;
         }
 

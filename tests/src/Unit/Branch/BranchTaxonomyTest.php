@@ -13,7 +13,6 @@ namespace GM\Hierarchy\Tests\Unit\Branch;
 use Brain\Monkey\Functions;
 use GM\Hierarchy\Branch\BranchTaxonomy;
 use GM\Hierarchy\Tests\TestCase;
-use Mockery;
 
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
@@ -22,7 +21,6 @@ use Mockery;
  */
 final class BranchTaxonomyTest extends TestCase
 {
-
     public function testLeavesNoTax()
     {
         Functions::when('get_queried_object')->justReturn();
@@ -33,7 +31,7 @@ final class BranchTaxonomyTest extends TestCase
 
     public function testLeaves()
     {
-        $taxonomy = (object)['slug' => 'foo', 'taxonomy' => 'custom-tax'];
+        $taxonomy = (object) ['slug' => 'foo', 'taxonomy' => 'custom-tax'];
         Functions::when('get_queried_object')->justReturn($taxonomy);
 
         $branch = new BranchTaxonomy();

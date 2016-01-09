@@ -40,7 +40,7 @@ final class BranchSingle implements BranchInterface
     {
         /** @var \WP_Post $post */
         $post = get_queried_object();
-        $post instanceof \WP_Post or $post = new \WP_Post((object)['ID' => 0]);
+        $post instanceof \WP_Post or $post = new \WP_Post((object) ['ID' => 0]);
 
         $leaves = empty($post->post_type) ? [] : ["single-{$post->post_type}"];
         $leaves[] = 'single';

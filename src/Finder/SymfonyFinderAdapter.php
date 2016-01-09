@@ -22,7 +22,6 @@ use Symfony\Component\Finder\Finder;
  */
 class SymfonyFinderAdapter implements FinderInterface
 {
-
     use FindFirstTemplateTrait;
 
     /**
@@ -51,7 +50,7 @@ class SymfonyFinderAdapter implements FinderInterface
     }
 
     /**
-     * @param \Symfony\Component\Finder\Finder $finder
+     * @param  \Symfony\Component\Finder\Finder          $finder
      * @return \GM\Hierarchy\Finder\SymfonyFinderAdapter
      */
     public function withSymfonyFinder(Finder $finder)
@@ -83,7 +82,7 @@ class SymfonyFinderAdapter implements FinderInterface
         $quoted = preg_quote($name, '~');
         $iterator = $finder->files()->name("~^{$quoted}(\.[\w]{1,})?$~")->getIterator();
 
-        if ( ! iterator_count($iterator) > 0) {
+        if (! iterator_count($iterator) > 0) {
             return '';
         }
 

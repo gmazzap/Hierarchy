@@ -15,7 +15,6 @@ use GM\Hierarchy\Branch\BranchPage;
 use GM\Hierarchy\Tests\TestCase;
 use Mockery;
 
-
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
@@ -23,7 +22,6 @@ use Mockery;
  */
 final class BranchPageTest extends TestCase
 {
-
     public function testLeavesNoPageNoPagename()
     {
         $post = Mockery::mock('\WP_Post');
@@ -116,7 +114,8 @@ final class BranchPageTest extends TestCase
 
         $branch = new BranchPage();
 
-        assertSame(['page-templates/page-meh', 'page-bar', 'page-1', 'page', 'singular'], $branch->leaves());
+        assertSame(['page-templates/page-meh', 'page-bar', 'page-1', 'page', 'singular'],
+            $branch->leaves());
     }
 
     public function testLeavesPagePagenameTemplateNoValidate()

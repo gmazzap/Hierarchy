@@ -12,7 +12,6 @@ namespace GM\Hierarchy;
 
 use GM\Hierarchy\Finder\BaseTemplateFinder;
 use GM\Hierarchy\Finder\FinderInterface;
-use GM\Hierarchy\Finder\MultiFinderInterface;
 
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
@@ -21,7 +20,6 @@ use GM\Hierarchy\Finder\MultiFinderInterface;
  */
 class TemplateLoader implements TemplateLoaderInterface
 {
-
     /**
      * @var callable
      */
@@ -48,8 +46,8 @@ class TemplateLoader implements TemplateLoaderInterface
      * If no WP_Query provided, global \WP_Query is used.
      * By default, found template passes through "{$type}_template" filter.
      *
-     * @param \WP_Query $query
-     * @param bool      $filters Pass the found template through filter?
+     * @param  \WP_Query $query
+     * @param  bool      $filters Pass the found template through filter?
      * @return string
      */
     public function find(\WP_Query $query = null, $filters = true)
@@ -60,13 +58,13 @@ class TemplateLoader implements TemplateLoaderInterface
 
         $leaves = (new Hierarchy($query))->get();
 
-        if ( ! is_array($leaves) || empty($leaves)) {
+        if (! is_array($leaves) || empty($leaves)) {
             return '';
         }
 
         $types = array_keys($leaves);
         $found = '';
-        while ( ! empty($types) && ! $found) {
+        while (! empty($types) && ! $found) {
             $type = array_shift($types);
             $found = $this->finder->findFirst($leaves[$type], $type);
             $filters and $found = apply_filters("{$type}_template", $found);

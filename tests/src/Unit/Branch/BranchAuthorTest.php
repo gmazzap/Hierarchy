@@ -15,7 +15,6 @@ use GM\Hierarchy\Branch\BranchAuthor;
 use GM\Hierarchy\Tests\TestCase;
 use Mockery;
 
-
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
@@ -23,7 +22,6 @@ use Mockery;
  */
 final class BranchAuthorTest extends TestCase
 {
-
     public function testLeavesNoUser()
     {
         $branch = new BranchAuthor();

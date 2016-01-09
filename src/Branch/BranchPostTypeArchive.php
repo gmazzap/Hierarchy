@@ -17,7 +17,6 @@ namespace GM\Hierarchy\Branch;
  */
 final class BranchPostTypeArchive implements BranchInterface
 {
-
     /**
      * @var string
      */
@@ -36,7 +35,7 @@ final class BranchPostTypeArchive implements BranchInterface
      */
     public function is(\WP_Query $query)
     {
-        if ( ! $query->is_post_type_archive()) {
+        if (! $query->is_post_type_archive()) {
             return false;
         }
         $type = $query->get('post_type');

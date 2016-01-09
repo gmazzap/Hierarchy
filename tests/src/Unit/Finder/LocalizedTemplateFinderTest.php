@@ -11,7 +11,6 @@
 namespace GM\Hierarchy\Tests\Unit\Finder;
 
 use Brain\Monkey\Functions;
-use GM\Hierarchy\Finder\BaseTemplateFinder;
 use GM\Hierarchy\Finder\CallbackTemplateFinder;
 use GM\Hierarchy\Finder\LocalizedTemplateFinder;
 use GM\Hierarchy\Tests\TestCase;
@@ -23,7 +22,6 @@ use GM\Hierarchy\Tests\TestCase;
  */
 final class LocalizedTemplateFinderTest extends TestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -75,5 +73,4 @@ final class LocalizedTemplateFinderTest extends TestCase
             $finder->findFirst(['foo', 'single', 'bar'], 'single'));
         assertSame("{$path}/another.php", $finder->findFirst(['foo', 'meh', 'another'], 'foo'));
     }
-
 }

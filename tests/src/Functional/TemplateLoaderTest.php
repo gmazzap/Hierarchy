@@ -10,7 +10,6 @@
 
 namespace GM\Hierarchy\Tests\Functional;
 
-
 use Brain\Monkey\Functions;
 use GM\Hierarchy\Finder\BaseTemplateFinder;
 use GM\Hierarchy\Finder\LocalizedTemplateFinder;
@@ -27,7 +26,6 @@ use Symfony\Component\Finder\Finder;
  */
 class TemplateLoaderTest extends TestCase
 {
-
     public function testLoadPageCustom()
     {
         $post = Mockery::mock('\WP_Post');
@@ -64,12 +62,12 @@ class TemplateLoaderTest extends TestCase
             return 'it_IT';
         });
 
-        $taxonomy = (object)['slug' => 'bar', 'taxonomy' => 'foo'];
+        $taxonomy = (object) ['slug' => 'bar', 'taxonomy' => 'foo'];
         Functions::when('get_queried_object')->justReturn($taxonomy);
 
         $wpQuery = new \WP_Query([
             'is_tax'     => true,
-            'is_archive' => true
+            'is_archive' => true,
         ]);
 
         $finder = new Finder();
@@ -83,5 +81,4 @@ class TemplateLoaderTest extends TestCase
         $this->expectOutputString('foo bar');
         $loader->load($wpQuery);
     }
-
 }

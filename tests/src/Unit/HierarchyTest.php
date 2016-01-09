@@ -14,7 +14,6 @@ use GM\Hierarchy\Tests\TestCase;
 use GM\Hierarchy\Tests\Stubs;
 use GM\Hierarchy\Branch\BranchInterface;
 use GM\Hierarchy\Hierarchy;
-use Mockery;
 
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
@@ -23,7 +22,6 @@ use Mockery;
  */
 class HierarchyTest extends TestCase
 {
-
     public function testParse()
     {
         $query = new \WP_Query();
@@ -41,14 +39,14 @@ class HierarchyTest extends TestCase
         $expected = [
             'foo'   => ['foo', 'bar'],
             'bar'   => ['baz', 'bar'],
-            'index' => ['index']
+            'index' => ['index'],
         ];
 
         $expectedFlat = [
             'foo',
             'bar',
             'baz',
-            'index'
+            'index',
         ];
 
         assertSame($expected, $hierarchy->get());
@@ -64,5 +62,4 @@ class HierarchyTest extends TestCase
             assertInstanceOf(BranchInterface::class, new $class());
         }
     }
-
 }

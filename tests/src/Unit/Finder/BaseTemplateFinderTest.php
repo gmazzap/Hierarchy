@@ -21,7 +21,6 @@ use GM\Hierarchy\Tests\TestCase;
  */
 final class BaseTemplateFinderTest extends TestCase
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -54,5 +53,4 @@ final class BaseTemplateFinderTest extends TestCase
 
         assertSame($template, $finder->findFirst(['page-foo', 'another', 'index'], 'page'));
     }
-
 }

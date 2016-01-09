@@ -12,17 +12,15 @@ namespace {
 
     class WP_Error
     {
-
     }
 
     class WP_Query
     {
-
         public $true;
 
         public function __construct(array $true = [])
         {
-            $this->true =  $true;
+            $this->true = $true;
         }
 
         public function __call($name, $arguments)
@@ -46,7 +44,6 @@ namespace GM\Hierarchy\Tests\Stubs {
 
     class BranchStubFoo implements BranchInterface
     {
-
         public function name()
         {
             return 'foo';
@@ -68,7 +65,6 @@ namespace GM\Hierarchy\Tests\Stubs {
 
     class BranchStubBar implements BranchInterface
     {
-
         public function name()
         {
             return 'bar';
@@ -90,7 +86,6 @@ namespace GM\Hierarchy\Tests\Stubs {
 
     class BranchStubBar2 implements BranchInterface
     {
-
         public function name()
         {
             return 'bar';
@@ -112,7 +107,6 @@ namespace GM\Hierarchy\Tests\Stubs {
 
     class BranchStubBaz implements BranchInterface
     {
-
         public function name()
         {
             return 'baz';
@@ -132,4 +126,3 @@ namespace GM\Hierarchy\Tests\Stubs {
         }
     }
 }
-

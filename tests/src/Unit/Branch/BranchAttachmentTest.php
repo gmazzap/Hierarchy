@@ -14,7 +14,6 @@ use GM\Hierarchy\Branch\BranchAttachment;
 use GM\Hierarchy\Tests\TestCase;
 use Mockery;
 
-
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
@@ -22,7 +21,6 @@ use Mockery;
  */
 final class BranchAttachmentTest extends TestCase
 {
-
     public function testLeavesNoPost()
     {
         $branch = new BranchAttachment();
