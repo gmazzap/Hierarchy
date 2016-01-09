@@ -36,7 +36,7 @@ final class BranchPostTypeArchiveTest extends TestCase
         $query = Mockery::mock('\WP_Query');
         $query->shouldReceive('is_post_type_archive')->andReturn(true);
         $query->shouldReceive('get')->with('post_type')->andReturn('my_cpt');
-        Functions::expect('get_post_type_object')->with('my_cpt')->andReturn((object)['has_archive'=>true]);
+        Functions::expect('get_post_type_object')->with('my_cpt')->andReturn((object)['has_archive' => true]);
 
         $branch = new BranchPostTypeArchive();
 
@@ -49,7 +49,7 @@ final class BranchPostTypeArchiveTest extends TestCase
         $query = Mockery::mock('\WP_Query');
         $query->shouldReceive('is_post_type_archive')->andReturn(true);
         $query->shouldReceive('get')->with('post_type')->andReturn('my_cpt');
-        Functions::expect('get_post_type_object')->with('my_cpt')->andReturn((object)['has_archive'=>false]);
+        Functions::expect('get_post_type_object')->with('my_cpt')->andReturn((object)['has_archive' => false]);
 
         $branch = new BranchPostTypeArchive();
 

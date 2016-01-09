@@ -34,7 +34,7 @@ final class BranchTagTest extends TestCase
 
     public function testLeaves()
     {
-        $tag = (object)['slug' => 'foo', 'term_id' => 123 ];
+        $tag = (object)['slug' => 'foo', 'term_id' => 123];
         Functions::when('get_queried_object')->justReturn($tag);
 
         $branch = new BranchTag();

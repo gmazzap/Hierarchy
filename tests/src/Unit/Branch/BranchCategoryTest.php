@@ -34,7 +34,7 @@ final class BranchCategoryTest extends TestCase
 
     public function testLeaves()
     {
-        $category = (object)['slug' => 'foo', 'term_id' => 123 ];
+        $category = (object)['slug' => 'foo', 'term_id' => 123];
         Functions::when('get_queried_object')->justReturn($category);
 
         $branch = new BranchCategory();

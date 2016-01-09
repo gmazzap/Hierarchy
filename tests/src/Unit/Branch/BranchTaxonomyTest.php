@@ -33,10 +33,11 @@ final class BranchTaxonomyTest extends TestCase
 
     public function testLeaves()
     {
-        $taxonomy = (object)['slug' => 'foo', 'taxonomy' => 'custom-tax' ];
+        $taxonomy = (object)['slug' => 'foo', 'taxonomy' => 'custom-tax'];
         Functions::when('get_queried_object')->justReturn($taxonomy);
 
         $branch = new BranchTaxonomy();
-        assertSame(['taxonomy-custom-tax-foo', 'taxonomy-custom-tax', 'taxonomy'], $branch->leaves());
+        $expected = ['taxonomy-custom-tax-foo', 'taxonomy-custom-tax', 'taxonomy'];
+        assertSame($expected, $branch->leaves());
     }
 }
