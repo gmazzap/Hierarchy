@@ -26,8 +26,7 @@ class HierarchyTest extends TestCase
 
     public function testParse()
     {
-        /** @var \WP_Query $query */
-        $query = Mockery::mock('WP_Query');
+        $query = new \WP_Query();
         $hierarchy = new Hierarchy($query);
 
         $branches = [
