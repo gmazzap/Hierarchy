@@ -36,13 +36,13 @@ final class BranchPage implements BranchInterface
     /**
      * @inheritdoc
      */
-    public function leaves()
+    public function leaves(\WP_Query $query)
     {
         /** @var \WP_Post $post */
-        $post = get_queried_object();
+        $post = $query->get_queried_object();
 
         $post instanceof \WP_Post or $post = new \WP_Post((object) ['ID' => 0]);
-        $pagename = get_query_var('pagename');
+        $pagename = $query->get('pagename');
 
         if (empty($post->post_name) && empty($pagename)) {
             return ['page', 'singular'];

@@ -29,11 +29,11 @@ final class BranchPageTest extends TestCase
         $post->post_name = '';
         $post->post_type = '';
 
-        $branch = new BranchPage();
-        Functions::when('get_queried_object')->justReturn($post);
-        Functions::expect('get_query_var')->with('pagename')->andReturn('');
+        $query = new \WP_Query([], $post, ['pagename' => '']);
 
-        assertSame(['page', 'singular'], $branch->leaves());
+        $branch = new BranchPage();
+
+        assertSame(['page', 'singular'], $branch->leaves($query));
     }
 
     public function testLeavesNoPage()
@@ -43,13 +43,12 @@ final class BranchPageTest extends TestCase
         $post->post_name = '';
         $post->post_type = '';
 
-        Functions::when('get_queried_object')->justReturn($post);
-        Functions::expect('get_query_var')->with('pagename')->andReturn('foo');
+        $query = new \WP_Query([], $post, ['pagename' => 'foo']);
         Functions::expect('get_page_template_slug')->with($post)->andReturn('');
 
         $branch = new BranchPage();
 
-        assertSame(['page-foo', 'page-0', 'page', 'singular'], $branch->leaves());
+        assertSame(['page-foo', 'page-0', 'page', 'singular'], $branch->leaves($query));
     }
 
     public function testLeavesPage()
@@ -59,12 +58,11 @@ final class BranchPageTest extends TestCase
         $post->post_name = 'foo';
         $post->post_type = 'page';
 
-        Functions::when('get_queried_object')->justReturn($post);
-        Functions::expect('get_query_var')->with('pagename')->andReturn('');
+        $query = new \WP_Query([], $post, ['pagename' => '']);
         Functions::expect('get_page_template_slug')->with($post)->andReturn('');
 
         $branch = new BranchPage();
-        assertSame(['page-foo', 'page-1', 'page', 'singular'], $branch->leaves());
+        assertSame(['page-foo', 'page-1', 'page', 'singular'], $branch->leaves($query));
     }
 
     public function testLeavesPagePagename()
@@ -74,13 +72,12 @@ final class BranchPageTest extends TestCase
         $post->post_name = 'foo';
         $post->post_type = 'page';
 
-        Functions::when('get_queried_object')->justReturn($post);
-        Functions::expect('get_query_var')->with('pagename')->andReturn('bar');
+        $query = new \WP_Query([], $post, ['pagename' => 'bar']);
         Functions::expect('get_page_template_slug')->with($post)->andReturn('');
 
         $branch = new BranchPage();
 
-        assertSame(['page-bar', 'page-1', 'page', 'singular'], $branch->leaves());
+        assertSame(['page-bar', 'page-1', 'page', 'singular'], $branch->leaves($query));
     }
 
     public function testLeavesPagePagenameTemplate()
@@ -90,14 +87,13 @@ final class BranchPageTest extends TestCase
         $post->post_name = 'foo';
         $post->post_type = 'page';
 
-        Functions::when('get_queried_object')->justReturn($post);
-        Functions::expect('get_query_var')->with('pagename')->andReturn('bar');
+        $query = new \WP_Query([], $post, ['pagename' => 'bar']);
         Functions::expect('get_page_template_slug')->with($post)->andReturn('page-meh.php');
         Functions::expect('validate_file')->with('page-meh.php')->andReturn(0);
 
         $branch = new BranchPage();
 
-        assertSame(['page-meh', 'page-bar', 'page-1', 'page', 'singular'], $branch->leaves());
+        assertSame(['page-meh', 'page-bar', 'page-1', 'page', 'singular'], $branch->leaves($query));
     }
 
     public function testLeavesPagePagenameTemplateFolder()
@@ -107,15 +103,15 @@ final class BranchPageTest extends TestCase
         $post->post_name = 'foo';
         $post->post_type = 'page';
 
-        Functions::when('get_queried_object')->justReturn($post);
-        Functions::expect('get_query_var')->with('pagename')->andReturn('bar');
+        $query = new \WP_Query([], $post, ['pagename' => 'bar']);
         Functions::expect('get_page_template_slug')->with($post)->andReturn('page-templates/page-meh.php');
         Functions::expect('validate_file')->with('page-templates/page-meh.php')->andReturn(0);
 
         $branch = new BranchPage();
 
-        assertSame(['page-templates/page-meh', 'page-bar', 'page-1', 'page', 'singular'],
-            $branch->leaves());
+        $expected = ['page-templates/page-meh', 'page-bar', 'page-1', 'page', 'singular'];
+
+        assertSame($expected, $branch->leaves($query));
     }
 
     public function testLeavesPagePagenameTemplateNoValidate()
@@ -125,13 +121,12 @@ final class BranchPageTest extends TestCase
         $post->post_name = 'foo';
         $post->post_type = 'page';
 
-        Functions::when('get_queried_object')->justReturn($post);
-        Functions::expect('get_query_var')->with('pagename')->andReturn('bar');
+        $query = new \WP_Query([], $post, ['pagename' => 'bar']);
         Functions::expect('get_page_template_slug')->with($post)->andReturn('page-meh.php');
         Functions::expect('validate_file')->with('page-meh.php')->andReturn(1);
 
         $branch = new BranchPage();
 
-        assertSame(['page-bar', 'page-1', 'page', 'singular'], $branch->leaves());
+        assertSame(['page-bar', 'page-1', 'page', 'singular'], $branch->leaves($query));
     }
 }

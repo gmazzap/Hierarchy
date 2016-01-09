@@ -36,7 +36,7 @@ final class BranchHome implements BranchInterface
     /**
      * @inheritdoc
      */
-    public function leaves()
+    public function leaves(\WP_Query $query)
     {
         return ['home', 'index'];
     }

@@ -36,10 +36,10 @@ final class BranchCategory implements BranchInterface
     /**
      * @inheritdoc
      */
-    public function leaves()
+    public function leaves(\WP_Query $query)
     {
         /** @var \stdClass $term */
-        $term = get_queried_object();
+        $term = $query->get_queried_object();
         if (! isset($term->slug) || ! isset($term->term_id)) {
             return ['category'];
         }

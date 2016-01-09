@@ -10,10 +10,8 @@
 
 namespace GM\Hierarchy\Tests\Unit\Branch;
 
-use Brain\Monkey\Functions;
 use GM\Hierarchy\Branch\BranchTag;
 use GM\Hierarchy\Tests\TestCase;
-
 
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
@@ -24,18 +22,18 @@ final class BranchTagTest extends TestCase
 {
     public function testLeavesNoTag()
     {
-        Functions::when('get_queried_object')->justReturn();
+        $query = new \WP_Query();
         $branch = new BranchTag();
 
-        assertSame(['tag'], $branch->leaves());
+        assertSame(['tag'], $branch->leaves($query));
     }
 
     public function testLeaves()
     {
         $tag = (object) ['slug' => 'foo', 'term_id' => 123];
-        Functions::when('get_queried_object')->justReturn($tag);
+        $query = new \WP_Query([], $tag);
 
         $branch = new BranchTag();
-        assertSame(['tag-foo', 'tag-123', 'tag'], $branch->leaves());
+        assertSame(['tag-foo', 'tag-123', 'tag'], $branch->leaves($query));
     }
 }

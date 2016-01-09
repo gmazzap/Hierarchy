@@ -33,8 +33,6 @@ class TemplateLoaderTest extends TestCase
         $post->post_name = 'a-page';
         $post->post_type = 'page';
 
-        Functions::when('get_queried_object')->justReturn($post);
-        Functions::expect('get_query_var')->with('pagename')->andReturn('a-page');
         Functions::expect('get_page_template_slug')->with($post)->andReturn('page-templates/page-custom.php');
         Functions::expect('validate_file')->with('page-templates/page-custom.php')->andReturn(0);
         Functions::when('get_stylesheet_directory')->alias(function () {
@@ -44,12 +42,14 @@ class TemplateLoaderTest extends TestCase
             return getenv('HIERARCHY_TESTS_BASEPATH');
         });
 
-        $wpQuery = new \WP_Query(['is_page' => true]);
+        $wpQuery = new \WP_Query(['is_page' => true], $post, ['pagename' => 'a-page']);
 
         $loader = new TemplateLoader(new BaseTemplateFinder('files', 'twig'));
 
-        $this->expectOutputString('page custom');
+        ob_start();
         $loader->load($wpQuery);
+
+        assertSame('page custom', trim(ob_get_clean()));
     }
 
     public function testLocalizedTaxonomy()
@@ -62,13 +62,10 @@ class TemplateLoaderTest extends TestCase
             return 'it_IT';
         });
 
-        $taxonomy = (object) ['slug' => 'bar', 'taxonomy' => 'foo'];
-        Functions::when('get_queried_object')->justReturn($taxonomy);
-
         $wpQuery = new \WP_Query([
             'is_tax'     => true,
             'is_archive' => true,
-        ]);
+        ], (object) ['slug' => 'bar', 'taxonomy' => 'foo']);
 
         $finder = new Finder();
         $finder->in([get_stylesheet_directory().'/files'])
@@ -78,7 +75,9 @@ class TemplateLoaderTest extends TestCase
 
         $loader = new TemplateLoader(new LocalizedTemplateFinder(new SymfonyFinderAdapter($finder)));
 
-        $this->expectOutputString('foo bar');
+        ob_start();
         $loader->load($wpQuery);
+
+        assertSame('foo bar', trim(ob_get_clean()));
     }
 }

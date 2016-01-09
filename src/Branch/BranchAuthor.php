@@ -36,10 +36,10 @@ final class BranchAuthor implements BranchInterface
     /**
      * @inheritdoc
      */
-    public function leaves()
+    public function leaves(\WP_Query $query)
     {
         /** @var \WP_User $user */
-        $user = get_queried_object();
+        $user = $query->get_queried_object();
 
         if (! $user instanceof \WP_User) {
             return ['author'];

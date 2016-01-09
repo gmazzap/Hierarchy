@@ -10,10 +10,8 @@
 
 namespace GM\Hierarchy\Tests\Unit\Branch;
 
-use Brain\Monkey\Functions;
 use GM\Hierarchy\Branch\BranchCategory;
 use GM\Hierarchy\Tests\TestCase;
-
 
 /**
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
@@ -24,18 +22,19 @@ final class BranchCategoryTest extends TestCase
 {
     public function testLeavesNoCategory()
     {
-        Functions::when('get_queried_object')->justReturn();
+        $query = new \WP_Query([], null);
         $branch = new BranchCategory();
 
-        assertSame(['category'], $branch->leaves());
+        assertSame(['category'], $branch->leaves($query));
     }
 
     public function testLeaves()
     {
         $category = (object) ['slug' => 'foo', 'term_id' => 123];
-        Functions::when('get_queried_object')->justReturn($category);
+        $query = new \WP_Query([], $category);
 
         $branch = new BranchCategory();
-        assertSame(['category-foo', 'category-123', 'category'], $branch->leaves());
+
+        assertSame(['category-foo', 'category-123', 'category'], $branch->leaves($query));
     }
 }

@@ -10,7 +10,6 @@
 
 namespace GM\Hierarchy\Tests\Unit\Branch;
 
-use Brain\Monkey\Functions;
 use GM\Hierarchy\Branch\BranchAuthor;
 use GM\Hierarchy\Tests\TestCase;
 use Mockery;
@@ -25,9 +24,9 @@ final class BranchAuthorTest extends TestCase
     public function testLeavesNoUser()
     {
         $branch = new BranchAuthor();
-        Functions::when('get_queried_object')->justReturn();
+        $query = new \WP_Query([], null);
 
-        assertSame(['author'], $branch->leaves());
+        assertSame(['author'], $branch->leaves($query));
     }
 
     public function testLeaves()
@@ -35,10 +34,10 @@ final class BranchAuthorTest extends TestCase
         $user = Mockery::mock('\WP_User');
         $user->ID = 12;
         $user->user_nicename = 'john_doe';
+        $query = new \WP_Query([], $user);
 
         $branch = new BranchAuthor();
-        Functions::when('get_queried_object')->justReturn($user);
 
-        assertSame(['author-john_doe', 'author-12', 'author'], $branch->leaves());
+        assertSame(['author-john_doe', 'author-12', 'author'], $branch->leaves($query));
     }
 }

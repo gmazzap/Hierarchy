@@ -24,8 +24,11 @@ final class BranchAttachmentTest extends TestCase
     public function testLeavesNoPost()
     {
         $branch = new BranchAttachment();
+        $post = Mockery::mock('\WP_Post');
+        $post->post_mime_type = '';
+        $wpQuery = new \WP_Query(['is_attachment'], $post);
 
-        assertSame(['attachment'], $branch->leaves());
+        assertSame(['attachment'], $branch->leaves($wpQuery));
     }
 
     public function testLeaves()
@@ -33,9 +36,9 @@ final class BranchAttachmentTest extends TestCase
         $branch = new BranchAttachment();
         $post = Mockery::mock('\WP_Post');
         $post->post_mime_type = 'image/jpeg';
+        $wpQuery = new \WP_Query(['is_attachment'], $post);
+        $wpQuery->post = $post;
 
-        $this->setPrivateVar('post', $post, $branch);
-
-        assertSame(['image', 'jpeg', 'image_jpeg', 'attachment'], $branch->leaves());
+        assertSame(['image', 'jpeg', 'image_jpeg', 'attachment'], $branch->leaves($wpQuery));
     }
 }

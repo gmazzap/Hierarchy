@@ -18,11 +18,6 @@ namespace GM\Hierarchy\Branch;
 final class BranchAttachment implements BranchInterface
 {
     /**
-     * @var \WP_Post
-     */
-    private $post;
-
-    /**
      * @inheritdoc
      */
     public function name()
@@ -35,26 +30,20 @@ final class BranchAttachment implements BranchInterface
      */
     public function is(\WP_Query $query)
     {
-        if ($query->is_attachment()) {
-            $posts = $query->posts;
-            $this->post = $posts ? reset($posts) : null;
-
-            return true;
-        }
-
-        return false;
+        return $query->is_attachment();
     }
 
     /**
      * @inheritdoc
      */
-    public function leaves()
+    public function leaves(\WP_Query $query)
     {
-        if (! $this->post instanceof \WP_Post) {
-            return ['attachment'];
-        }
+        /** @var \WP_Post $post */
+        $post = $query->get_queried_object();
+        $post instanceof \WP_Post or $post = new \WP_Post((object) ['ID' => 0]);
+
         $leaves = [];
-        $mimetype = explode('/', $this->post->post_mime_type, 2);
+        empty($post->post_mime_type) or $mimetype = explode('/', $post->post_mime_type, 2);
         if (! empty($mimetype) && ! empty($mimetype[0])) {
             $leaves = isset($mimetype[1]) && $mimetype[1]
                 ? [$mimetype[0], $mimetype[1], "{$mimetype[0]}_{$mimetype[1]}"]

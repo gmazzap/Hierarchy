@@ -10,7 +10,6 @@
 
 namespace GM\Hierarchy\Tests\Unit\Branch;
 
-use Brain\Monkey\Functions;
 use GM\Hierarchy\Branch\BranchSingle;
 use GM\Hierarchy\Tests\TestCase;
 use Mockery;
@@ -27,11 +26,11 @@ final class BranchSingleTest extends TestCase
         $post = Mockery::mock('\WP_Post');
         $post->ID = 0;
         $post->post_name = '';
-
-        Functions::when('get_queried_object')->justReturn($post);
+        $query = new \WP_Query([], $post);
 
         $branch = new BranchSingle();
-        assertSame(['single', 'singular'], $branch->leaves());
+
+        assertSame(['single', 'singular'], $branch->leaves($query));
     }
 
     public function testLeaves()
@@ -39,11 +38,10 @@ final class BranchSingleTest extends TestCase
         $post = Mockery::mock('\WP_Post');
         $post->ID = 123;
         $post->post_type = 'my_cpt';
-
-        Functions::when('get_queried_object')->justReturn($post);
+        $query = new \WP_Query([], $post);
 
         $branch = new BranchSingle();
 
-        assertSame(['single-my_cpt', 'single', 'singular'], $branch->leaves());
+        assertSame(['single-my_cpt', 'single', 'singular'], $branch->leaves($query));
     }
 }

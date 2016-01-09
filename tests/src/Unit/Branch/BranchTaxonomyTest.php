@@ -10,7 +10,6 @@
 
 namespace GM\Hierarchy\Tests\Unit\Branch;
 
-use Brain\Monkey\Functions;
 use GM\Hierarchy\Branch\BranchTaxonomy;
 use GM\Hierarchy\Tests\TestCase;
 
@@ -23,19 +22,19 @@ final class BranchTaxonomyTest extends TestCase
 {
     public function testLeavesNoTax()
     {
-        Functions::when('get_queried_object')->justReturn();
+        $query = new \WP_Query([]);
         $branch = new BranchTaxonomy();
 
-        assertSame(['taxonomy'], $branch->leaves());
+        assertSame(['taxonomy'], $branch->leaves($query));
     }
 
     public function testLeaves()
     {
         $taxonomy = (object) ['slug' => 'foo', 'taxonomy' => 'custom-tax'];
-        Functions::when('get_queried_object')->justReturn($taxonomy);
+        $query = new \WP_Query([], $taxonomy);
 
         $branch = new BranchTaxonomy();
         $expected = ['taxonomy-custom-tax-foo', 'taxonomy-custom-tax', 'taxonomy'];
-        assertSame($expected, $branch->leaves());
+        assertSame($expected, $branch->leaves($query));
     }
 }

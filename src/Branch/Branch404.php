@@ -36,7 +36,7 @@ final class Branch404 implements BranchInterface
     /**
      * @inheritdoc
      */
-    public function leaves()
+    public function leaves(\WP_Query $query)
     {
         return ['404'];
     }

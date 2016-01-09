@@ -10,7 +10,6 @@
 
 namespace GM\Hierarchy\Finder;
 
-
 /**
  * Search templates looking for "localized" folders.
  *

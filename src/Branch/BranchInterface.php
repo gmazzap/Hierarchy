@@ -29,7 +29,8 @@ interface BranchInterface
     public function is(\WP_Query $query);
 
     /**
+     * @param  \WP_Query $query
      * @return array
      */
-    public function leaves();
+    public function leaves(\WP_Query $query);
 }

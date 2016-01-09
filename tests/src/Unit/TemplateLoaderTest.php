@@ -81,9 +81,10 @@ class TemplateLoaderTest extends TestCase
 
         $loader = new TemplateLoader($finder);
 
-        $this->expectOutputString('index');
-
+        ob_start();
         $loader->load($wpQuery, false);
+
+        assertSame('index', trim(ob_get_clean()));
     }
 
     public function testLoadFilters()
@@ -98,9 +99,10 @@ class TemplateLoaderTest extends TestCase
 
         $loader = new TemplateLoader($finder);
 
-        $this->expectOutputString('another');
-
+        ob_start();
         $loader->load($wpQuery, true);
+
+        assertSame('another', trim(ob_get_clean()));
     }
 
     public function testLoadAndExit()
@@ -122,8 +124,10 @@ class TemplateLoaderTest extends TestCase
 
         $loader = new TemplateLoader($finder);
 
-        $this->expectOutputString('index');
+        ob_start();
         $loader->load($wpQuery, true, true);
+
+        assertSame('index', trim(ob_get_clean()));
 
         assertTrue($exit);
     }
@@ -147,8 +151,10 @@ class TemplateLoaderTest extends TestCase
 
         $loader = new TemplateLoader($finder);
 
-        $this->expectOutputString('index');
+        ob_start();
         $loader->loadAndExit($wpQuery, true);
+
+        assertSame('index', trim(ob_get_clean()));
 
         assertTrue($exit);
     }

@@ -26,7 +26,7 @@ final class BranchPostTypeArchiveTest extends TestCase
     {
         $branch = new BranchPostTypeArchive();
 
-        assertSame(['archive'], $branch->leaves());
+        assertSame(['archive'], $branch->leaves(new \WP_Query()));
     }
 
     public function testLeavesWithArchiveCpt()
@@ -39,7 +39,7 @@ final class BranchPostTypeArchiveTest extends TestCase
         $branch = new BranchPostTypeArchive();
 
         assertTrue($branch->is($query));
-        assertSame(['archive-my_cpt', 'archive'], $branch->leaves());
+        assertSame(['archive-my_cpt', 'archive'], $branch->leaves($query));
     }
 
     public function testLeavesWithNoArchiveCpt()
@@ -52,6 +52,6 @@ final class BranchPostTypeArchiveTest extends TestCase
         $branch = new BranchPostTypeArchive();
 
         assertFalse($branch->is($query));
-        assertSame(['archive'], $branch->leaves());
+        assertSame(['archive'], $branch->leaves($query));
     }
 }

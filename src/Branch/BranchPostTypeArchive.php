@@ -53,7 +53,7 @@ final class BranchPostTypeArchive implements BranchInterface
     /**
      * @inheritdoc
      */
-    public function leaves()
+    public function leaves(\WP_Query $query)
     {
         return $this->type ? ["archive-{$this->type}", 'archive'] : ['archive'];
     }

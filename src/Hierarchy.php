@@ -110,7 +110,7 @@ final class Hierarchy
             $branch = new $class();
             $name = $branch->name();
             if ($branch->is($query) && ! isset($hierarchy[$name])) {
-                $leaves = $branch->leaves();
+                $leaves = $branch->leaves($query);
                 $hierarchy[$name] = $leaves;
                 $flat = array_merge($flat, $leaves);
             }
