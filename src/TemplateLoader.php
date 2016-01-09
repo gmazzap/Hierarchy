@@ -67,7 +67,7 @@ class TemplateLoader implements TemplateLoaderInterface
         while (! empty($types) && ! $found) {
             $type = array_shift($types);
             $found = $this->finder->findFirst($leaves[$type], $type);
-            $filters and $found = apply_filters("{$type}_template", $found);
+            $filters and $found = $this->applyFilter("{$type}_template", $found, $query);
         }
 
         (is_string($found) && $found) and $this->found = $found;
@@ -88,8 +88,7 @@ class TemplateLoader implements TemplateLoaderInterface
     public function load(\WP_Query $query = null, $filters = true, $exit = false)
     {
         $template = $this->find($query, $filters);
-
-        $filters and $template = apply_filters('template_include', $template);
+        $filters and $template = $this->applyFilter('template_include', $template, $query);
 
         /** @noinspection PhpIncludeInspection */
         (is_file($template) && is_readable($template)) and include $template;
@@ -114,5 +113,35 @@ class TemplateLoader implements TemplateLoaderInterface
     public function loadAndExit(\WP_Query $query = null, $filters = true)
     {
         $this->load($query, $filters, true);
+    }
+
+    /**
+     * To maximize compatibility, when applying a filters and the WP_Query object we are using is
+     * NOT the main query, we temporarily set global $wp_query and $wp_the_query to our custom query
+     *
+     * @param  string    $filter
+     * @param  string    $value
+     * @param  \WP_Query $query
+     * @return string
+     */
+    private function applyFilter($filter, $value, \WP_Query $query)
+    {
+        $backup = [];
+        $custom = ! $query->is_main_query();
+        global $wp_query, $wp_the_query;
+        if ($custom && $wp_query instanceof \WP_Query && $wp_the_query instanceof \WP_Query) {
+            $backup = [clone $wp_query, clone $wp_the_query];
+            unset($wp_query, $wp_the_query);
+            $wp_query = $wp_the_query = $query;
+        }
+
+        $result = apply_filters($filter, $value);
+
+        if ($custom && $backup) {
+            unset($wp_query, $wp_the_query);
+            list($wp_query, $wp_the_query) = $backup;
+        }
+
+        return $result;
     }
 }
