@@ -28,7 +28,7 @@ trait FindFirstTemplateTrait
     public function findFirst(array $templates, $type)
     {
         $found = '';
-        while ( ! empty($templates) && $found !== '') {
+        while ( ! empty($templates) && $found === '') {
             $found = $this->find(array_shift($templates), $type) ? : '';
         }
 
