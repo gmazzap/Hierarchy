@@ -22,6 +22,9 @@ use Symfony\Component\Finder\Finder;
  */
 class SymfonyFinderAdapter implements FinderInterface
 {
+
+    use FindFirstTemplateTrait;
+
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -35,19 +38,23 @@ class SymfonyFinderAdapter implements FinderInterface
         if (is_null($finder)) {
             $stylesheet = trailingslashit(get_stylesheet_directory());
             $template = trailingslashit(get_template_directory());
-            $folders = [$stylesheet()];
+            $folders = [$stylesheet];
             ($stylesheet !== $template) and $folders[] = $template;
-            $finder = (new Finder())->in($folders);
+            $finder = (new Finder())
+                ->in($folders)
+                ->ignoreDotFiles(true)
+                ->ignoreUnreadableDirs(true)
+                ->followLinks();
         }
 
-        $this->finder = $finder->ignoreDotFiles(true)->ignoreUnreadableDirs(true);
+        $this->finder = $finder;
     }
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
      * @return \GM\Hierarchy\Finder\SymfonyFinderAdapter
      */
-    public function withFinder(Finder $finder)
+    public function withSymfonyFinder(Finder $finder)
     {
         $clone = clone $this;
         $clone->finder = $finder;
@@ -55,38 +62,33 @@ class SymfonyFinderAdapter implements FinderInterface
         return $clone;
     }
 
-
     /**
      * @inheritdoc
      */
     public function find($template, $type)
     {
-        /** @var \Iterator $iterator */
-        $iterator = $this->finder->files()->name("#{$template}(\.[\w]{1,})?$#");
-        if ($iterator->valid()) {
-            $iterator->rewind();
+        $name = trim(str_replace('\\', '/', $template), '/');
+        $depth = substr_count($name, '/');
 
-            return $iterator->current();
+        $finder = clone $this->finder;
+        $finder = $finder->depth("== {$depth}");
+
+        if ($depth) {
+            $dir = dirname($name);
+            $finder = $finder->path($dir);
+            $name = basename($name);
         }
 
-        return '';
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function findFirst(array $templates, $type)
-    {
-        $names = '('.implode('|', $templates).')';
         /** @var \Iterator $iterator */
-        $iterator = $this->finder->files()->name("#{$names}(\.[\w]{1,})?$#");
-        if ($iterator->valid()) {
-            $iterator->rewind();
+        $quoted = preg_quote($name, '~');
+        $iterator = $finder->files()->name("~^{$quoted}(\.[\w]{1,})?$~")->getIterator();
 
-            return $iterator->current();
+        if ( ! iterator_count($iterator) > 0) {
+            return '';
         }
 
-        return '';
+        $array = iterator_to_array($iterator);
+
+        return reset($array)->getRealPath();
     }
 }
