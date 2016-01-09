@@ -19,7 +19,7 @@ use GM\Hierarchy\Finder\MultiFinderInterface;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-class TemplateLoader
+class TemplateLoader implements TemplateLoaderInterface
 {
 
     /**
@@ -46,7 +46,7 @@ class TemplateLoader
     /**
      * Find a template for the given WP_Query.
      * If no WP_Query provided, global \WP_Query is used.
-     * By default, pass found template through the "{$type}_template" filter.
+     * By default, found template passes through "{$type}_template" filter.
      *
      * @param \WP_Query $query
      * @param bool      $filters Pass the found template through filter?
@@ -68,7 +68,7 @@ class TemplateLoader
         $found = '';
         while ( ! empty($types) && ! $found) {
             $type = array_shift($types);
-            $found = $this->finder->findFirst($leaves[$type]);
+            $found = $this->finder->findFirst($leaves[$type], $type);
             $filters and $found = apply_filters("{$type}_template", $found);
         }
 
@@ -80,16 +80,17 @@ class TemplateLoader
     /**
      * Find a template for the given query and load it.
      * If no WP_Query provided, global \WP_Query is used.
-     * By default, pass found template through the "template_include" filter.
+     * By default, found template passes through "{$type}_template" and "template_include" filters.
      * Optionally exit the request after having loaded the template.
      *
      * @param \WP_Query|null $query
      * @param bool           $filters Pass the found template through filters?
-     * @param bool           $exit Exit the request after having included the template?
+     * @param bool           $exit    Exit the request after having included the template?
      */
     public function load(\WP_Query $query = null, $filters = true, $exit = false)
     {
-        $template = $this->find($query);
+        $template = $this->find($query, $filters);
+
         $filters and $template = apply_filters('template_include', $template);
 
         /** @noinspection PhpIncludeInspection */
