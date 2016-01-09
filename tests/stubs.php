@@ -15,6 +15,28 @@ namespace {
 
     }
 
+    class WP_Query
+    {
+
+        public $true;
+
+        public function __construct(array $true = [])
+        {
+            $this->true =  $true;
+        }
+
+        public function __call($name, $arguments)
+        {
+            if (! array_key_exists($name, $this->true)) {
+                return false;
+            }
+
+            $want = $this->true[$name];
+
+            return empty($arguments) || $want === true || $want === $arguments;
+        }
+    }
+
 }
 
 namespace GM\Hierarchy\Tests\Stubs {
