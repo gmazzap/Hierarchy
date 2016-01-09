@@ -39,9 +39,9 @@ final class LocalizedTemplateFinder implements FinderInterface
     use FindFirstTemplateTrait;
 
     /**
-     * @var string
+     * @var array
      */
-    private $locale;
+    private $folders = [];
 
     /**
      * @var \GM\Hierarchy\Finder\BaseTemplateFinder
@@ -53,8 +53,17 @@ final class LocalizedTemplateFinder implements FinderInterface
      */
     public function __construct(FinderInterface $finder = null)
     {
-        $this->locale = get_locale();
         $this->finder = $finder ? : new BaseTemplateFinder();
+        $locale = get_locale();
+        if (! $locale || ! is_string($locale)) {
+            return;
+        }
+        $this->folders = [filter_var($locale, FILTER_SANITIZE_URL)];
+        if (strpos($locale, '_') !== false) {
+            $parts = explode('_', $locale, 2);
+            $part = reset($parts);
+            $part and $this->folders[] = filter_var($part, FILTER_SANITIZE_URL);
+        }
     }
 
     /**
@@ -62,7 +71,15 @@ final class LocalizedTemplateFinder implements FinderInterface
      */
     public function find($template, $type)
     {
-        $templates = [$this->locale . '/'. $template, $template];
+        if (empty($this->folders)) {
+            return $this->finder->find($template, $type);
+        }
+
+        $templates = array_map(function($folder) use($template) {
+            return $folder . '/' . $template;
+        }, $this->folders);
+
+        $templates[] = $template;
 
         return $this->finder->findFirst($templates, $type);
     }
