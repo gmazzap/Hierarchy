@@ -11,7 +11,7 @@
 namespace GM\Hierarchy\Tests\Functional;
 
 use Brain\Monkey\Functions;
-use GM\Hierarchy\Finder\BaseTemplateFinder;
+use GM\Hierarchy\Finder\FoldersTemplateFinder;
 use GM\Hierarchy\Finder\LocalizedTemplateFinder;
 use GM\Hierarchy\Finder\SymfonyFinderAdapter;
 use GM\Hierarchy\TemplateLoader;
@@ -35,16 +35,11 @@ class TemplateLoaderTest extends TestCase
 
         Functions::expect('get_page_template_slug')->with($post)->andReturn('page-templates/page-custom.php');
         Functions::expect('validate_file')->with('page-templates/page-custom.php')->andReturn(0);
-        Functions::when('get_stylesheet_directory')->alias(function () {
-            return getenv('HIERARCHY_TESTS_BASEPATH');
-        });
-        Functions::when('get_template_directory')->alias(function () {
-            return getenv('HIERARCHY_TESTS_BASEPATH');
-        });
 
         $wpQuery = new \WP_Query(['is_page' => true], $post, ['pagename' => 'a-page']);
 
-        $loader = new TemplateLoader(new BaseTemplateFinder('files', 'twig'));
+        $folders = [getenv('HIERARCHY_TESTS_BASEPATH').'/files'];
+        $loader = new TemplateLoader(new FoldersTemplateFinder($folders, 'twig'));
 
         ob_start();
         $loader->load($wpQuery);

@@ -10,8 +10,7 @@
 
 namespace GM\Hierarchy\Tests\Unit\Finder;
 
-use Brain\Monkey\Functions;
-use GM\Hierarchy\Finder\BaseTemplateFinder;
+use GM\Hierarchy\Finder\FoldersTemplateFinder;
 use GM\Hierarchy\Tests\TestCase;
 
 /**
@@ -19,36 +18,31 @@ use GM\Hierarchy\Tests\TestCase;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-final class BaseTemplateFinderTest extends TestCase
+final class FoldersTemplateFinderTest extends TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-        Functions::when('get_stylesheet_directory')->alias(function () {
-            return getenv('HIERARCHY_TESTS_BASEPATH');
-        });
-        Functions::when('get_template_directory')->alias(function () {
-            return getenv('HIERARCHY_TESTS_BASEPATH');
-        });
-    }
-
     public function testFindNothing()
     {
-        $finder = new BaseTemplateFinder('files');
+        $folders = [getenv('HIERARCHY_TESTS_BASEPATH').'/files'];
+        $finder = new FoldersTemplateFinder($folders);
+
         assertSame('', $finder->find('foo', 'foo'));
     }
 
     public function testFind()
     {
-        $finder = new BaseTemplateFinder('files');
         $template = getenv('HIERARCHY_TESTS_BASEPATH').'/files/index.php';
+
+        $folders = [getenv('HIERARCHY_TESTS_BASEPATH').'/files'];
+        $finder = new FoldersTemplateFinder($folders);
 
         assertSame($template, $finder->find('index', 'index'));
     }
 
     public function testFindFirst()
     {
-        $finder = new BaseTemplateFinder('files');
+        $folders = [getenv('HIERARCHY_TESTS_BASEPATH').'/files'];
+        $finder = new FoldersTemplateFinder($folders);
+
         $template = getenv('HIERARCHY_TESTS_BASEPATH').'/files/another.php';
 
         assertSame($template, $finder->findFirst(['page-foo', 'another', 'index'], 'page'));

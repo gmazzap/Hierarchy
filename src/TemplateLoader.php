@@ -10,7 +10,7 @@
 
 namespace GM\Hierarchy;
 
-use GM\Hierarchy\Finder\BaseTemplateFinder;
+use GM\Hierarchy\Finder\FoldersTemplateFinder;
 use GM\Hierarchy\Finder\FinderInterface;
 
 /**
@@ -36,7 +36,7 @@ class TemplateLoader implements TemplateLoaderInterface
     public function __construct(FinderInterface $finder = null)
     {
         // if no finder provided, let's use the one that simulates core behaviour
-        is_null($finder) and $finder = new BaseTemplateFinder();
+        is_null($finder) and $finder = new FoldersTemplateFinder();
 
         $this->finder = $finder;
     }

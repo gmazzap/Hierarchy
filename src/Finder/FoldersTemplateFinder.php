@@ -20,7 +20,7 @@ use ArrayIterator;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-final class BaseTemplateFinder implements FinderInterface
+final class FoldersTemplateFinder implements FinderInterface
 {
     use FindFirstTemplateTrait;
 
@@ -35,16 +35,17 @@ final class BaseTemplateFinder implements FinderInterface
     private $extension;
 
     /**
-     * @param string $subfolder
+     * @param array  $folders
      * @param string $extension
      */
-    public function __construct($subfolder = '', $extension = 'php')
+    public function __construct(array $folders = [], $extension = 'php')
     {
-        $sub = $subfolder ? trim($subfolder, '\\/') : '';
-        $stylesheet = trailingslashit(get_stylesheet_directory());
-        $template = trailingslashit(get_template_directory());
-        $folders = [$stylesheet.$sub];
-        ($stylesheet !== $template) and $folders[] = $template.$sub;
+        if (empty($folders)) {
+            $stylesheet = trailingslashit(get_stylesheet_directory());
+            $template = trailingslashit(get_template_directory());
+            $folders = [$stylesheet];
+            ($stylesheet !== $template) and $folders[] = $template;
+        }
 
         $this->folders = new ArrayIterator($folders);
         $this->extension = $extension;

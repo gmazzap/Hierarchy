@@ -41,7 +41,7 @@ final class LocalizedTemplateFinder implements FinderInterface
     private $folders = [];
 
     /**
-     * @var \GM\Hierarchy\Finder\BaseTemplateFinder
+     * @var \GM\Hierarchy\Finder\FoldersTemplateFinder
      */
     private $finder;
 
@@ -50,7 +50,7 @@ final class LocalizedTemplateFinder implements FinderInterface
      */
     public function __construct(FinderInterface $finder = null)
     {
-        $this->finder = $finder ?: new BaseTemplateFinder();
+        $this->finder = $finder ?: new FoldersTemplateFinder();
         $locale = get_locale();
         if (! $locale || ! is_string($locale)) {
             return;
