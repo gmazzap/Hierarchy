@@ -13,8 +13,8 @@ namespace GM\Hierarchy\Tests\Functional;
 use Brain\Monkey\Functions;
 use GM\Hierarchy\Finder\FoldersTemplateFinder;
 use GM\Hierarchy\Finder\LocalizedTemplateFinder;
-use GM\Hierarchy\Finder\SymfonyFinderAdapter;
-use GM\Hierarchy\TemplateLoader;
+use GM\Hierarchy\Finder\SymfonyTemplateFinderAdapter;
+use GM\Hierarchy\QueryTemplate;
 use GM\Hierarchy\Tests\TestCase;
 use Mockery;
 use Symfony\Component\Finder\Finder;
@@ -39,10 +39,10 @@ class TemplateLoaderTest extends TestCase
         $wpQuery = new \WP_Query(['is_page' => true], $post, ['pagename' => 'a-page']);
 
         $folders = [getenv('HIERARCHY_TESTS_BASEPATH').'/files'];
-        $loader = new TemplateLoader(new FoldersTemplateFinder($folders, 'twig'));
+        $loader = new QueryTemplate(new FoldersTemplateFinder($folders, 'twig'));
 
         ob_start();
-        $loader->load($wpQuery);
+        $loader->loadTemplate($wpQuery);
 
         assertSame('page custom', trim(ob_get_clean()));
     }
@@ -68,10 +68,10 @@ class TemplateLoaderTest extends TestCase
                ->ignoreUnreadableDirs(true)
                ->followLinks();
 
-        $loader = new TemplateLoader(new LocalizedTemplateFinder(new SymfonyFinderAdapter($finder)));
+        $loader = new QueryTemplate(new LocalizedTemplateFinder(new SymfonyTemplateFinderAdapter($finder)));
 
         ob_start();
-        $loader->load($wpQuery);
+        $loader->loadTemplate($wpQuery);
 
         assertSame('foo bar', trim(ob_get_clean()));
     }
