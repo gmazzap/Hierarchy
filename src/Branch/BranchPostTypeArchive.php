@@ -30,13 +30,7 @@ final class BranchPostTypeArchive implements BranchInterface
      */
     public function is(\WP_Query $query)
     {
-        if (! $query->is_post_type_archive()) {
-            return false;
-        }
-
-        $object = get_post_type_object($this->postType($query));
-
-        return is_object($object) && ! empty($object->has_archive);
+        return $query->is_post_type_archive() && $this->postType($query);
     }
 
     /**
@@ -56,10 +50,11 @@ final class BranchPostTypeArchive implements BranchInterface
     private function postType(\WP_Query $query)
     {
         $type = $query->get('post_type');
-        if (is_array($type)) {
-            $type = reset($post_type);
-        }
+        is_array($type) and $type = reset($post_type);
 
-        return is_string($type) ? $type : '';
+        $object = get_post_type_object($type);
+        (is_object($object) && $object->has_archive) or $type = '';
+
+        return $type;
     }
 }
