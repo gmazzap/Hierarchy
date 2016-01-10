@@ -29,14 +29,11 @@ interface QueryTemplateInterface
     public function find(\WP_Query $query = null, $filters = true);
 
     /**
-     * Find a template for the given query and load it.
-     * If no WP_Query provided, global \WP_Query is used.
-     * By default, found template passes through "{$type}_template" and "template_include" filters.
-     * Optionally exit the request after having loaded the template.
+     * Find a template for the given query and load it returning the results.
      *
-     * @param \WP_Query|null $query
-     * @param bool           $filters Pass the found template through filters?
-     * @param bool           $exit    Exit the request after having included the template?
+     * @param  \WP_Query|null $query
+     * @param  bool           $filters Pass the found template through filters?
+     * @return string
      */
-    public function loadTemplate(\WP_Query $query = null, $filters = true, $exit = false);
+    public function loadTemplate(\WP_Query $query = null, $filters = true);
 }

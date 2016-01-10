@@ -18,7 +18,10 @@ namespace GM\Hierarchy\Loader;
 interface TemplateLoaderInterface
 {
     /**
-     * @param string $templatePath
+     * Load a template and return the rendered content.
+     *
+     * @param  string $templatePath
+     * @return string
      */
     public function load($templatePath);
 }

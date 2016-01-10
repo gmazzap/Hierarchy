@@ -18,11 +18,13 @@ namespace GM\Hierarchy\Loader;
 final class FileRequireLoader implements TemplateLoaderInterface
 {
     /**
-     * @param string $templatePath
+     * @inheritdoc
      */
     public function load($templatePath)
     {
         $production = ! defined('WP_DEBUG') || ! WP_DEBUG;
+
+        ob_start();
         if (! $production) {
             /** @noinspection PhpIncludeInspection */
             require $templatePath;
@@ -30,5 +32,8 @@ final class FileRequireLoader implements TemplateLoaderInterface
             /** @noinspection PhpIncludeInspection */
             require $templatePath;
         }
+        $content = trim(ob_get_clean());
+
+        return $content;
     }
 }
