@@ -56,7 +56,7 @@ class HierarchyTest extends TestCase
 
         assertInstanceOf(\stdClass::class, $data);
         assertSame($expected, $data->hierarchy);
-        assertSame($expectedFlat, $data->flat);
+        assertSame($expectedFlat, $data->templates);
     }
 
     public function testBranches()

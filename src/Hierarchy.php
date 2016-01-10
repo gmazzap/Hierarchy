@@ -43,12 +43,11 @@ final class Hierarchy
      * Get hierarchy.
      *
      * @param  \WP_Query $query
-     * @param  bool      $flat
      * @return array
      */
-    public function getHierarchy(\WP_Query $query = null, $flat = false)
+    public function getHierarchy(\WP_Query $query = null)
     {
-        return $flat ? $this->parse($query)->flat : $this->parse($query)->hierarchy;
+        return $this->parse($query)->hierarchy;
     }
 
     /**
@@ -57,9 +56,9 @@ final class Hierarchy
      * @param  \WP_Query $query
      * @return array
      */
-    public function getHierarchyFlat(\WP_Query $query = null)
+    public function getTemplates(\WP_Query $query = null)
     {
-        return $this->get(true);
+        return $this->parse($query)->templates;
     }
 
     /**
@@ -72,15 +71,15 @@ final class Hierarchy
     {
         (is_null($query) && isset($GLOBALS['wp_query'])) and $query = $GLOBALS['wp_query'];
 
-        $data = (object) ['hierarchy' => [], 'flat' => [], 'query' => $query];
+        $data = (object) ['hierarchy' => [], 'templates' => [], 'query' => $query];
 
         if ($query instanceof \WP_Query) {
             $data = array_reduce(self::$branches, [$this, 'parseBranch'], $data);
-            $data->flat[] = 'index';
+            $data->templates[] = 'index';
             $data->hierarchy['index'] = ['index'];
         }
 
-        $data->flat = array_values(array_unique($data->flat));
+        $data->templates = array_values(array_unique($data->templates));
 
         return $data;
     }
@@ -98,7 +97,7 @@ final class Hierarchy
         if ($branch->is($data->query) && ! isset($data->hierarchy[$name])) {
             $leaves = $branch->leaves($data->query);
             $data->hierarchy[$name] = $leaves;
-            $data->flat = array_merge($data->flat, $leaves);
+            $data->templates = array_merge($data->templates, $leaves);
         }
 
         return $data;
