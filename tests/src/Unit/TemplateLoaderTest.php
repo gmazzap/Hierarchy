@@ -10,8 +10,6 @@
 
 namespace GM\Hierarchy\Tests\Unit;
 
-use Brain\Monkey\Functions;
-use Brain\Monkey\WP\Actions;
 use Brain\Monkey\WP\Filters;
 use GM\Hierarchy\QueryTemplate;
 use GM\Hierarchy\Tests\TestCase;
@@ -81,10 +79,7 @@ class TemplateLoaderTest extends TestCase
 
         $loader = new QueryTemplate($finder);
 
-        ob_start();
-        $loader->loadTemplate($wpQuery, false);
-
-        assertSame('index', trim(ob_get_clean()));
+        assertSame('index', $loader->loadTemplate($wpQuery, false));
     }
 
     public function testLoadFilters()
@@ -99,63 +94,6 @@ class TemplateLoaderTest extends TestCase
 
         $loader = new QueryTemplate($finder);
 
-        ob_start();
-        $loader->loadTemplate($wpQuery, true);
-
-        assertSame('another', trim(ob_get_clean()));
-    }
-
-    public function testLoadAndExit()
-    {
-        Functions::expect('has_action')->once()->with(QueryTemplate::class.'.exit')->andReturn(false);
-
-        $exit = false;
-        Actions::expectFired(QueryTemplate::class.'.exit')->once()->whenHappen(function () use (
-            &$exit
-        ) {
-            $exit = true;
-        });
-
-        $wpQuery = new \WP_Query();
-        $template = getenv('HIERARCHY_TESTS_BASEPATH').'/files/index.php';
-
-        $finder = Mockery::mock(TemplateFinderInterface::class);
-        $finder->shouldReceive('findFirst')->once()->with(['index'], 'index')->andReturn($template);
-
-        $loader = new QueryTemplate($finder);
-
-        ob_start();
-        $loader->loadTemplate($wpQuery, true, true);
-
-        assertSame('index', trim(ob_get_clean()));
-
-        assertTrue($exit);
-    }
-
-    public function testLoadAndExitWithHelper()
-    {
-        Functions::expect('has_action')->once()->with(QueryTemplate::class.'.exit')->andReturn(false);
-
-        $exit = false;
-        Actions::expectFired(QueryTemplate::class.'.exit')->once()->whenHappen(function () use (
-            &$exit
-        ) {
-            $exit = true;
-        });
-
-        $wpQuery = new \WP_Query();
-        $template = getenv('HIERARCHY_TESTS_BASEPATH').'/files/index.php';
-
-        $finder = Mockery::mock(TemplateFinderInterface::class);
-        $finder->shouldReceive('findFirst')->once()->with(['index'], 'index')->andReturn($template);
-
-        $loader = new QueryTemplate($finder);
-
-        ob_start();
-        $loader->loadAndExit($wpQuery, true);
-
-        assertSame('index', trim(ob_get_clean()));
-
-        assertTrue($exit);
+        assertSame('another', $loader->loadTemplate($wpQuery, true));
     }
 }

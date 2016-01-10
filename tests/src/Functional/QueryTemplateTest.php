@@ -41,10 +41,7 @@ class QueryTemplateTest extends TestCase
         $folders = [getenv('HIERARCHY_TESTS_BASEPATH').'/files'];
         $loader = new QueryTemplate(new FoldersTemplateFinder($folders, 'twig'));
 
-        ob_start();
-        $loader->loadTemplate($wpQuery);
-
-        assertSame('page custom', trim(ob_get_clean()));
+        assertSame('page custom', $loader->loadTemplate($wpQuery));
     }
 
     public function testLocalizedTaxonomy()
@@ -70,18 +67,14 @@ class QueryTemplateTest extends TestCase
 
         $loader = new QueryTemplate(new LocalizedTemplateFinder(new SymfonyTemplateFinderAdapter($finder)));
 
-        ob_start();
-        $loader->loadTemplate($wpQuery);
-
-        assertSame('foo bar', trim(ob_get_clean()));
+        assertSame('foo bar', $loader->loadTemplate($wpQuery));
     }
 
     public function testFallbackToArchive()
     {
         Functions::when('get_stylesheet_directory')->alias(function () {
-            return getenv('HIERARCHY_TESTS_BASEPATH') . '/files/it_IT';
+            return getenv('HIERARCHY_TESTS_BASEPATH').'/files/it_IT';
         });
-
 
         $wpQuery = new \WP_Query([
             'is_tax'     => true,
@@ -90,16 +83,13 @@ class QueryTemplateTest extends TestCase
 
         $loader = new QueryTemplate();
 
-        ob_start();
-        $loader->loadTemplate($wpQuery);
-
-        assertSame('archive', trim(ob_get_clean()));
+        assertSame('archive', $loader->loadTemplate($wpQuery));
     }
 
     public function testFallbackToIndex()
     {
         Functions::when('get_stylesheet_directory')->alias(function () {
-            return getenv('HIERARCHY_TESTS_BASEPATH') . '/files';
+            return getenv('HIERARCHY_TESTS_BASEPATH').'/files';
         });
 
         $wpTaxQuery = new \WP_Query([
@@ -108,19 +98,12 @@ class QueryTemplateTest extends TestCase
         ], (object) ['slug' => 'bar', 'taxonomy' => 'foo']);
 
         $wpSearchQuery = new \WP_Query([
-            'is_search'     => true,
+            'is_search' => true,
         ]);
 
         $loader = new QueryTemplate();
 
-        ob_start();
-        $loader->loadTemplate($wpTaxQuery);
-
-        assertSame('index', trim(ob_get_clean()));
-
-        ob_start();
-        $loader->loadTemplate($wpSearchQuery);
-
-        assertSame('index', trim(ob_get_clean()));
+        assertSame('index', $loader->loadTemplate($wpTaxQuery));
+        assertSame('index', $loader->loadTemplate($wpSearchQuery));
     }
 }
