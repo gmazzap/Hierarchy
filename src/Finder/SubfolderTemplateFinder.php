@@ -20,20 +20,19 @@ namespace GM\Hierarchy\Finder;
  */
 final class SubfolderTemplateFinder implements TemplateFinderInterface
 {
-
     /**
      * @var \GM\Hierarchy\Finder\FoldersTemplateFinder
      */
     private $finder;
 
     /**
-     * @param string  $subfolder
+     * @param string $subfolder
      * @param string $extension
      */
     public function __construct($subfolder, $extension = 'php')
     {
-        $stylesheet = trailingslashit(get_stylesheet_directory()) . $subfolder;
-        $template = trailingslashit(get_template_directory()) . $subfolder;
+        $stylesheet = trailingslashit(get_stylesheet_directory()).$subfolder;
+        $template = trailingslashit(get_template_directory()).$subfolder;
         $folders = [$stylesheet];
         ($stylesheet !== $template) and $folders[] = $template;
 
