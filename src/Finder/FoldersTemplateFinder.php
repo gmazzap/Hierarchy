@@ -23,6 +23,7 @@ use ArrayIterator;
  */
 final class FoldersTemplateFinder implements TemplateFinderInterface
 {
+
     use FindFirstTemplateTrait;
 
     /**
@@ -42,13 +43,13 @@ final class FoldersTemplateFinder implements TemplateFinderInterface
     public function __construct(array $folders = [], $extension = 'php')
     {
         if (empty($folders)) {
-            $stylesheet = trailingslashit(get_stylesheet_directory());
-            $template = trailingslashit(get_template_directory());
+            $stylesheet = get_stylesheet_directory();
+            $template = get_template_directory();
             $folders = [$stylesheet];
             ($stylesheet !== $template) and $folders[] = $template;
         }
 
-        $this->folders = new ArrayIterator($folders);
+        $this->folders = array_map('trailingslashit', $folders);
         $this->extension = $extension;
     }
 
@@ -57,14 +58,12 @@ final class FoldersTemplateFinder implements TemplateFinderInterface
      */
     public function find($template, $type)
     {
-        $found = '';
-        $this->folders->rewind();
-        while ($this->folders->valid() && $found === '') {
-            $path = $this->folders->current()."/{$template}.{$this->extension}";
-            $found = file_exists($path) ? $path : '';
-            $this->folders->next();
+        foreach ($this->folders as $folder) {
+            if (file_exists($folder.$template.'.'.$this->extension)) {
+                return $folder.$template.'.'.$this->extension;
+            }
         }
 
-        return $found;
+        return '';
     }
 }
