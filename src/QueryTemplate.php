@@ -33,6 +33,27 @@ class QueryTemplate implements QueryTemplateInterface
     private $loader;
 
     /**
+     * @param \GM\Hierarchy\Loader\TemplateLoaderInterface|null $loader
+     * @return \GM\Hierarchy\QueryTemplate
+     */
+    public static function instanceWithLoader(TemplateLoaderInterface $loader = null)
+    {
+        return new static(new FoldersTemplateFinder(), $loader);
+    }
+
+    /**
+     * @param array                                             $folders
+     * @param \GM\Hierarchy\Loader\TemplateLoaderInterface|null $loader
+     * @return \GM\Hierarchy\QueryTemplate
+     */
+    public static function instanceWithFolders(
+        array $folders,
+        TemplateLoaderInterface $loader = null
+    ) {
+        return new static(new FoldersTemplateFinder($folders), $loader);
+    }
+
+    /**
      * @param \GM\Hierarchy\Finder\TemplateFinderInterface|null $finder
      * @param \GM\Hierarchy\Loader\TemplateLoaderInterface      $loader
      */
