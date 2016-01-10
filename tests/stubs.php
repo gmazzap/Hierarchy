@@ -18,7 +18,6 @@ namespace {
     {
         public $true;
         public $object;
-        public $post = null;
 
         public function __construct(array $true = [], $object = null, array $vars = [])
         {

@@ -33,13 +33,15 @@ class HierarchyTest extends TestCase
             Stubs\BranchStubBaz::class,  // should be skipped because its is() always returns false
         ];
 
+        $query = new \WP_Query();
+
+        $branchesBackup = $this->getPrivateStaticVar('branches', $hierarchy);
         $this->setPrivateStaticVar('branches', $branches, $hierarchy);
 
-        $query = new \WP_Query();
         /** @var \stdClass $data */
         $data = $this->callPrivateFunc('parse', $hierarchy, [$query]);
 
-        $this->setPrivateStaticVar('branches', [], $hierarchy);
+        $this->setPrivateStaticVar('branches', $branchesBackup, $hierarchy);
 
         $expected = [
             'foo'   => (new Stubs\BranchStubFoo())->leaves($query),
