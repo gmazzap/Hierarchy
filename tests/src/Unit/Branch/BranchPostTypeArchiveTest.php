@@ -22,13 +22,6 @@ use Mockery;
  */
 final class BranchPostTypeArchiveTest extends TestCase
 {
-    public function testLeavesNoPostType()
-    {
-        $branch = new BranchPostTypeArchive();
-
-        assertSame(['archive'], $branch->leaves(new \WP_Query()));
-    }
-
     public function testLeavesWithArchiveCpt()
     {
         $query = Mockery::mock('\WP_Query');
