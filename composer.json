@@ -1,7 +1,9 @@
 {
     "name":         "gmazzap/hierarchy",
     "description":  "*Virtual* WordPress Template Hierarchy",
-    "keywords":     ["wordpress"],
+    "keywords":     [
+        "wordpress"
+    ],
     "license":      "MIT",
     "authors":      [
         {
@@ -22,7 +24,7 @@
         "gmazzap/andrew":  "~1.0",
         "symfony/finder":  "~2.7.0"
     },
-    "suggest": {
+    "suggest":      {
         "symfony/finder": "Allows loading of templates using Symfony finder component."
     },
     "autoload":     {
@@ -34,14 +36,15 @@
         "psr-4": {
             "GM\\Hierarchy\\Tests\\": "tests/src/"
         },
-        "files" : [
-            "./tests/stubs.php"
+        "files": [
+            "./tests/stubs/wp.php",
+            "./tests/stubs/branches.php"
         ]
     },
-    "config": {
+    "config":       {
         "optimize-autoloader": true
     },
-    "extra": {
+    "extra":        {
         "branch-alias": {
             "dev-legacy": "0.1.x-dev",
             "dev-master": "1.0.x-dev"
