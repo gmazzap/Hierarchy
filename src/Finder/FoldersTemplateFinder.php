@@ -13,8 +13,9 @@ namespace GM\Hierarchy\Finder;
 use ArrayIterator;
 
 /**
- * Very similar the way WordPress core works, however, it allows to search templates in a subfolder
- * (for both parent and child themes) and to use a custom file extension (default to php).
+ * Very similar the way WordPress core works, however, it allows to search templates arbitrary folders
+ * and to use a custom file extension (default to php).
+ * By default, stylesheet and template folders and file extension to php, so it acts exactly like core.
  *
  * @author  Giuseppe Mazzapica <giuseppe.mazzapica@gmail.com>
  * @license http://opensource.org/licenses/MIT MIT
