@@ -31,7 +31,7 @@ namespace GM\Hierarchy\Finder;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-final class LocalizedTemplateFinder implements FinderInterface
+final class LocalizedTemplateFinder implements TemplateFinderInterface
 {
     use FindFirstTemplateTrait;
 
@@ -46,9 +46,9 @@ final class LocalizedTemplateFinder implements FinderInterface
     private $finder;
 
     /**
-     * @param \GM\Hierarchy\Finder\FinderInterface $finder
+     * @param \GM\Hierarchy\Finder\TemplateFinderInterface $finder
      */
-    public function __construct(FinderInterface $finder = null)
+    public function __construct(TemplateFinderInterface $finder = null)
     {
         $this->finder = $finder ?: new FoldersTemplateFinder();
         $locale = get_locale();

@@ -15,7 +15,7 @@ namespace GM\Hierarchy\Finder;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-interface FinderInterface
+interface TemplateFinderInterface
 {
     /**
      * Receives

@@ -11,7 +11,7 @@
 namespace GM\Hierarchy\Tests\Functional\Finder;
 
 use Brain\Monkey\Functions;
-use GM\Hierarchy\Finder\SymfonyFinderAdapter;
+use GM\Hierarchy\Finder\SymfonyTemplateFinderAdapter;
 use GM\Hierarchy\Tests\TestCase;
 
 /**
@@ -39,7 +39,7 @@ final class SymfonyFinderAdapterTest extends TestCase
     {
         $template = realpath(getenv('HIERARCHY_TESTS_BASEPATH').'/files/index.php');
 
-        $finder = new SymfonyFinderAdapter();
+        $finder = new SymfonyTemplateFinderAdapter();
 
         assertSame($template, $finder->find('index', 'index'));
     }
@@ -48,7 +48,7 @@ final class SymfonyFinderAdapterTest extends TestCase
     {
         $template = realpath(getenv('HIERARCHY_TESTS_BASEPATH').'/files/another.php');
 
-        $finder = new SymfonyFinderAdapter();
+        $finder = new SymfonyTemplateFinderAdapter();
 
         assertSame($template, $finder->findFirst(['foo', 'another', 'index'], 'index'));
     }
@@ -57,7 +57,7 @@ final class SymfonyFinderAdapterTest extends TestCase
     {
         $template = realpath(getenv('HIERARCHY_TESTS_BASEPATH').'/files/it/page.php');
 
-        $finder = new SymfonyFinderAdapter();
+        $finder = new SymfonyTemplateFinderAdapter();
 
         assertSame($template, $finder->findFirst(['foo', 'it/page', 'index'], 'page'));
     }

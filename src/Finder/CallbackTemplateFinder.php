@@ -17,7 +17,7 @@ namespace GM\Hierarchy\Finder;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-final class CallbackTemplateFinder implements FinderInterface
+final class CallbackTemplateFinder implements TemplateFinderInterface
 {
     use FindFirstTemplateTrait;
 

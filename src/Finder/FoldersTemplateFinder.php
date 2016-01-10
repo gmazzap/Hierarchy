@@ -20,7 +20,7 @@ use ArrayIterator;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-final class FoldersTemplateFinder implements FinderInterface
+final class FoldersTemplateFinder implements TemplateFinderInterface
 {
     use FindFirstTemplateTrait;
 
