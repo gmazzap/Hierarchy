@@ -78,9 +78,9 @@ final class SymfonyTemplateFinderAdapter implements TemplateFinderInterface
             $name = basename($name);
         }
 
+        $quotedName = preg_quote($name, '~');
         /** @var \Iterator $iterator */
-        $quoted = preg_quote($name, '~');
-        $iterator = $finder->files()->name("~^{$quoted}(\.[\w]{1,})?$~")->getIterator();
+        $iterator = $finder->files()->name("~^{$quotedName}(\.[\w]{1,})?$~")->getIterator();
 
         if (! iterator_count($iterator) > 0) {
             return '';
