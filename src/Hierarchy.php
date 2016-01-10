@@ -40,52 +40,24 @@ final class Hierarchy
     ];
 
     /**
-     * @var \WP_Query
-     */
-    private $query;
-
-    /**
-     * @var bool
-     */
-    private $parsed = false;
-
-    /**
-     * @var array
-     */
-    private $hierarchy = [];
-
-    /**
-     * @var array
-     */
-    private $hierarchyFlat = [];
-
-    /**
-     * @param \WP_Query $query
-     */
-    public function __construct(\WP_Query $query = null)
-    {
-        $this->query = $query;
-    }
-
-    /**
      * Get hierarchy.
      *
-     * @param  bool  $flat
+     * @param  \WP_Query $query
+     * @param  bool      $flat
      * @return array
      */
-    public function get($flat = false)
+    public function getHierarchy(\WP_Query $query = null, $flat = false)
     {
-        $this->parsed or $this->parse(self::$branches);
-
-        return $flat ? $this->hierarchyFlat : $this->hierarchy;
+        return $flat ? $this->parse($query)->flat : $this->parse($query)->hierarchy;
     }
 
     /**
      * Get flatten hierarchy.
      *
+     * @param  \WP_Query $query
      * @return array
      */
-    public function getHierarchyFlat()
+    public function getHierarchyFlat(\WP_Query $query = null)
     {
         return $this->get(true);
     }
@@ -93,34 +65,42 @@ final class Hierarchy
     /**
      * Parse all branches.
      *
-     * @param string[] $branches
+     * @param  \WP_Query $query
+     * @return \stdClass
      */
-    private function parse(array $branches)
+    private function parse(\WP_Query $query = null)
     {
-        /** @var \WP_Query $query */
-        $query = $this->query ?: $GLOBALS['wp_query'];
-        if (! $query instanceof \WP_Query) {
-            return;
+        (is_null($query) && isset($GLOBALS['wp_query'])) and $query = $GLOBALS['wp_query'];
+
+        $data = (object) ['hierarchy' => [], 'flat' => [], 'query' => $query];
+
+        if ($query instanceof \WP_Query) {
+            $data = array_reduce(self::$branches, [$this, 'parseBranch'], $data);
+            $data->flat[] = 'index';
+            $data->hierarchy['index'] = ['index'];
         }
 
-        $hierarchy = [];
-        $flat = [];
+        $data->flat = array_values(array_unique($data->flat));
 
-        foreach ($branches as $class) {
-            /** @var \GM\Hierarchy\Branch\BranchInterface $branch */
-            $branch = new $class();
-            $name = $branch->name();
-            if ($branch->is($query) && ! isset($hierarchy[$name])) {
-                $leaves = $branch->leaves($query);
-                $hierarchy[$name] = $leaves;
-                $flat = array_merge($flat, $leaves);
-            }
+        return $data;
+    }
+
+    /**
+     * @param  string    $branchClass
+     * @param  \stdClass $data
+     * @return \stdClass
+     */
+    private function parseBranch(\stdClass $data, $branchClass)
+    {
+        /** @var \GM\Hierarchy\Branch\BranchInterface $branch */
+        $branch = new $branchClass();
+        $name = $branch->name();
+        if ($branch->is($data->query) && ! isset($data->hierarchy[$name])) {
+            $leaves = $branch->leaves($data->query);
+            $data->hierarchy[$name] = $leaves;
+            $data->flat = array_merge($data->flat, $leaves);
         }
 
-        $flat[] = 'index';
-        $hierarchy['index'] = ['index'];
-        $this->hierarchyFlat = array_values(array_unique($flat));
-        $this->hierarchy = $hierarchy;
-        $this->parsed = $this->query instanceof \WP_Query || did_action('template_redirect') > 0;
+        return $data;
     }
 }

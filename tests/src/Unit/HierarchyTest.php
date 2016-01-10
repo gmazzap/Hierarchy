@@ -24,21 +24,26 @@ class HierarchyTest extends TestCase
 {
     public function testParse()
     {
-        $query = new \WP_Query();
-        $hierarchy = new Hierarchy($query);
+        $hierarchy = new Hierarchy();
 
         $branches = [
-            Stubs\BranchStubFoo::class,
-            Stubs\BranchStubBar::class,
-            Stubs\BranchStubBar2::class,
-            Stubs\BranchStubBaz::class,
+            Stubs\BranchStubFoo::class,  // leaves: ['foo', 'bar']
+            Stubs\BranchStubBar::class,  // leaves: ['baz', 'bar']
+            Stubs\BranchStubBar2::class, // should be skipped because has same name of previos
+            Stubs\BranchStubBaz::class,  // should be skipped because its is() always returns false
         ];
 
-        $this->callPrivateFunc('parse', $hierarchy, [$branches]);
+        $this->setPrivateStaticVar('branches', $branches, $hierarchy);
+
+        $query = new \WP_Query();
+        /** @var \stdClass $data */
+        $data = $this->callPrivateFunc('parse', $hierarchy, [$query]);
+
+        $this->setPrivateStaticVar('branches', [], $hierarchy);
 
         $expected = [
-            'foo'   => ['foo', 'bar'],
-            'bar'   => ['baz', 'bar'],
+            'foo'   => (new Stubs\BranchStubFoo())->leaves($query),
+            'bar'   => (new Stubs\BranchStubBar())->leaves($query),
             'index' => ['index'],
         ];
 
@@ -49,8 +54,9 @@ class HierarchyTest extends TestCase
             'index',
         ];
 
-        assertSame($expected, $hierarchy->get());
-        assertSame($expectedFlat, $hierarchy->getHierarchyFlat());
+        assertInstanceOf(\stdClass::class, $data);
+        assertSame($expected, $data->hierarchy);
+        assertSame($expectedFlat, $data->flat);
     }
 
     public function testBranches()
