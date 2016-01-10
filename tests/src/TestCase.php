@@ -61,6 +61,17 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string $var
+     * @param mixed  $value
+     * @param object $object
+     */
+    protected function setPrivateStaticVar($var, $value, $object)
+    {
+        $proxy = new StaticProxy(get_class($object));
+        $proxy->{$var} = $value;
+    }
+
+    /**
      * @param  string $method
      * @param  object $object
      * @param  array  $args
