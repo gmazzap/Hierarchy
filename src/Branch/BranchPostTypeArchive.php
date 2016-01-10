@@ -18,11 +18,6 @@ namespace GM\Hierarchy\Branch;
 final class BranchPostTypeArchive implements BranchInterface
 {
     /**
-     * @var string
-     */
-    private $type = '';
-
-    /**
      * @inheritdoc
      */
     public function name()
@@ -38,16 +33,10 @@ final class BranchPostTypeArchive implements BranchInterface
         if (! $query->is_post_type_archive()) {
             return false;
         }
-        $type = $query->get('post_type');
-        if (is_array($type)) {
-            $type = reset($post_type);
-        }
 
-        $object = get_post_type_object($type);
-        $is = is_object($object) && ! empty($object->has_archive);
-        $this->type = $is ? $type : '';
+        $object = get_post_type_object($this->postType($query));
 
-        return $is;
+        return is_object($object) && ! empty($object->has_archive);
     }
 
     /**
@@ -55,6 +44,22 @@ final class BranchPostTypeArchive implements BranchInterface
      */
     public function leaves(\WP_Query $query)
     {
-        return $this->type ? ["archive-{$this->type}", 'archive'] : ['archive'];
+        $type = $this->postType($query);
+
+        return $type ? ["archive-{$type}", 'archive'] : ['archive'];
+    }
+
+    /**
+     * @param  \WP_Query    $query
+     * @return mixed|string
+     */
+    private function postType(\WP_Query $query)
+    {
+        $type = $query->get('post_type');
+        if (is_array($type)) {
+            $type = reset($post_type);
+        }
+
+        return is_string($type) ? $type : '';
     }
 }
