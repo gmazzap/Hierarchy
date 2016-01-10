@@ -21,25 +21,13 @@ use Mockery;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-class TemplateLoaderTest extends TestCase
+class QueryTemplateTest extends TestCase
 {
-    public function testFoundIsCached()
-    {
-        $finder = Mockery::mock(TemplateFinderInterface::class);
-
-        $loader = new QueryTemplate($finder);
-        $this->setPrivateVar('found', 'xxx', $loader);
-
-        assertSame('xxx', $loader->find());
-    }
-
     public function testFindEmptyWhenNoLeaves()
     {
         $finder = Mockery::mock(TemplateFinderInterface::class);
-        $GLOBALS['wp_query'] = '';
         $loader = new QueryTemplate($finder);
         $found = $loader->find();
-        unset($GLOBALS['wp_query']);
 
         assertSame('', $found);
     }
