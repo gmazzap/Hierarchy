@@ -29,5 +29,14 @@
         "psr-4": {
             "GM\\Tests\\": "tests/src/"
         }
+    },
+    "config": {
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-legacy": "0.1.x-dev",
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
