@@ -26,7 +26,7 @@ interface QueryTemplateInterface
      * @param  bool      $filters Pass the found template through filter?
      * @return string
      */
-    public function find(\WP_Query $query = null, $filters = true);
+    public function findTemplate(\WP_Query $query = null, $filters = true);
 
     /**
      * Find a template for the given query and load it returning the results.

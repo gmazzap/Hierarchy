@@ -75,7 +75,7 @@ class QueryTemplate implements QueryTemplateInterface
      * @param  bool      $filters Pass the found template through filter?
      * @return string
      */
-    public function find(\WP_Query $query = null, $filters = true)
+    public function findTemplate(\WP_Query $query = null, $filters = true)
     {
         $leaves = (new Hierarchy())->getHierarchy($query);
 
@@ -105,7 +105,7 @@ class QueryTemplate implements QueryTemplateInterface
      */
     public function loadTemplate(\WP_Query $query = null, $filters = true)
     {
-        $template = $this->find($query, $filters);
+        $template = $this->findTemplate($query, $filters);
         $filters and $template = $this->applyFilter('template_include', $template, $query);
 
         return is_file($template) && is_readable($template)

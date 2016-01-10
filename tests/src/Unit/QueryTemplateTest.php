@@ -27,7 +27,7 @@ class QueryTemplateTest extends TestCase
     {
         $finder = Mockery::mock(TemplateFinderInterface::class);
         $loader = new QueryTemplate($finder);
-        $found = $loader->find();
+        $found = $loader->findTemplate();
 
         assertSame('', $found);
     }
@@ -41,7 +41,7 @@ class QueryTemplateTest extends TestCase
 
         $loader = new QueryTemplate($finder);
 
-        assertSame($template, $loader->find($wpQuery, false));
+        assertSame($template, $loader->findTemplate($wpQuery, false));
     }
 
     public function testFindFilters()
@@ -55,7 +55,7 @@ class QueryTemplateTest extends TestCase
 
         $loader = new QueryTemplate($finder);
 
-        assertSame('foo.php', $loader->find($wpQuery, true));
+        assertSame('foo.php', $loader->findTemplate($wpQuery, true));
     }
 
     public function testLoadNoFilters()
