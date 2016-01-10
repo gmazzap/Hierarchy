@@ -33,11 +33,6 @@ class QueryTemplate implements QueryTemplateInterface
     private $loader;
 
     /**
-     * @var string
-     */
-    private $found = null;
-
-    /**
      * @param \GM\Hierarchy\Finder\TemplateFinderInterface|null $finder
      * @param \GM\Hierarchy\Loader\TemplateLoaderInterface      $loader
      */
@@ -61,11 +56,7 @@ class QueryTemplate implements QueryTemplateInterface
      */
     public function find(\WP_Query $query = null, $filters = true)
     {
-        if (is_string($this->found)) {
-            return $this->found;
-        }
-
-        $leaves = (new Hierarchy($query))->get();
+        $leaves = (new Hierarchy())->getHierarchy($query);
 
         if (! is_array($leaves) || empty($leaves)) {
             return '';
@@ -78,8 +69,6 @@ class QueryTemplate implements QueryTemplateInterface
             $found = $this->finder->findFirst($leaves[$type], $type);
             $filters and $found = $this->applyFilter("{$type}_template", $found, $query);
         }
-
-        (is_string($found) && $found) and $this->found = $found;
 
         return $found;
     }
