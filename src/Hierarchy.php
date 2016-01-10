@@ -105,6 +105,7 @@ final class Hierarchy
 
         $hierarchy = [];
         $flat = [];
+
         foreach ($branches as $class) {
             /** @var \GM\Hierarchy\Branch\BranchInterface $branch */
             $branch = new $class();
@@ -115,6 +116,7 @@ final class Hierarchy
                 $flat = array_merge($flat, $leaves);
             }
         }
+
         $flat[] = 'index';
         $hierarchy['index'] = ['index'];
         $this->hierarchyFlat = array_values(array_unique($flat));
