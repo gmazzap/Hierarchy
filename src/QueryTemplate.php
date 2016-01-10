@@ -54,6 +54,22 @@ class QueryTemplate implements QueryTemplateInterface
     }
 
     /**
+     * @return bool
+     */
+    public static function mainQueryTemplateAllowed() {
+
+        return
+            (
+                filter_input(INPUT_SERVER, 'REQUEST_METHOD') !== 'HEAD'
+                || ! apply_filters('exit_on_http_head', true)
+            )
+            && ! is_robots()
+            && ! is_feed()
+            && ! is_trackback()
+            && ! is_embed();
+    }
+
+    /**
      * @param \GM\Hierarchy\Finder\TemplateFinderInterface|null $finder
      * @param \GM\Hierarchy\Loader\TemplateLoaderInterface      $loader
      */
