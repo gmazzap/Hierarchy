@@ -63,7 +63,7 @@ you can see that is an accurate representation of the template hierarchy for a c
 
 If the question you want to answer is:
 
->>> Which templates WordPress will look for for this query?
+> Which templates WordPress will look for for this query?
 
 It can be simply done using the `getTemplates()` method:
 
@@ -164,6 +164,7 @@ add_action( 'template_redirect', function() {
     exit();
     
 } );
+```
 
 The snippet above replace every occurrence of `example.com` in the page content with `new.example.com`.
 
