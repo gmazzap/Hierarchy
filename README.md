@@ -3,6 +3,35 @@ Hierarchy
 
 Hierarchy is package that aims to represent with PHP objects the WordPress template hierarchy.
 
+----------
+
+# TOC
+
+- [What / Why?](#what--why)
+- [Template Hierarchy Representation](#template-hierarchy-representation)
+- [Template Resolution](#templates-resolution)
+  - [Template Resolution Example](#templates-resolution-example)
+- [Introducing `QueryTemplate`](#introducing-querytemplate)
+  - [Template content is returned](#template-content-is-returned)
+  - [Edit template content before to output](#edit-template-content-before-to-output)
+  - [Template Finders](#template-finders)
+    - [`FoldersTemplateFinder`](#folderstemplatefinder)
+      - [Custom file extension](#custom-file-extension)
+    - [`SubfolderTemplateFinder`](#subfoldertemplatefinder)
+    - [`LocalizedTemplateFinder`](#localizedtemplatefinder)
+    - [`SymfonyTemplateFinderAdapter`](#symfonytemplatefinderadapter)
+    - [`CallbackTemplateFinder`](#callbacktemplatefinder)
+  - [Introducing Template Loaders](#introducing-template-loaders)
+    - [`FileRequireLoader`](#filerequireloader)
+  - [Customized `QueryTemplate` Example](#customized-querytemplate-example)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Updating from 0.x releases](#updating-from-0x-releases)
+  - [0.x Maintenance](0x-maintenance)
+- [License](#license)
+
+-----------
+
 # What / Why?
 
 Every WP developer knows that for every frontend request, WordPress runs a query and then loads a
@@ -59,7 +88,7 @@ And if you compare this array with the [visual overview of template hierarchy](h
 you can see that is an accurate representation of the template hierarchy for a category query. 
 
 
-# Templates Resolution
+# Template Resolution
 
 If the question you want to answer is:
 
@@ -90,7 +119,7 @@ array(
 
 That is the list of templates WordPress will search, in the same order that WordPress will use.
 
-### Example
+### Template Resolution Example
 
 For this example, I will assume that a theme has template files stored in `templates` subfolder and
 using `.phtml` as file extension. 
@@ -330,9 +359,9 @@ add_action( 'template_redirect', function() {
 } );
 ```
 
-## `Introducing Template Loaders
+## Introducing Template Loaders
 
-After a template is found with any of the finder, `QueryTemplate` has to "load" it.+
+After a template is found with any of the finder, `QueryTemplate` has to "load" it.
 
 By default, loading is just a `require` wrapped by `ob_start()` / `ob_get_clean()` so that the template
 content is just returned as is.
