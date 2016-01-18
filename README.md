@@ -27,7 +27,7 @@ Hierarchy is package that aims to represent with PHP objects the WordPress templ
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Updating from 0.x releases](#updating-from-0x-releases)
-  - [0.x Maintenance](0x-maintenance)
+  - [0.x Maintenance](#0x-maintenance)
 - [License](#license)
 
 -----------
