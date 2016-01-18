@@ -1,7 +1,7 @@
 Hierarchy
 =========
 
-Hierarchy is package that aims to represent with PHP objects the WordPress template hierarchy.
+> Hierarchy is package that aims to represent with PHP objects the WordPress template hierarchy.
 
 ----------
 
