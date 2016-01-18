@@ -9,8 +9,4 @@ vendor/
 /composer.lock
 build/
 .idea/
-<<<<<<< HEAD
-build/
-=======
 phpunit.xml
->>>>>>> dev
