@@ -144,16 +144,18 @@ class QueryTemplate implements QueryTemplateInterface
         $custom = ! $query->is_main_query();
         global $wp_query, $wp_the_query;
         if ($custom && $wp_query instanceof \WP_Query && $wp_the_query instanceof \WP_Query) {
-            $backup = [clone $wp_query, clone $wp_the_query];
-            unset($wp_query, $wp_the_query);
-            $wp_query = $wp_the_query = $query;
+            $backup = [$wp_query, $wp_the_query];
+            unset($GLOBALS['wp_query'], $GLOBALS['wp_the_query']);
+            $GLOBALS['wp_query'] = $GLOBALS['wp_the_query'] = $query;
         }
 
         $result = apply_filters($filter, $value);
 
         if ($custom && $backup) {
-            unset($wp_query, $wp_the_query);
-            list($wp_query, $wp_the_query) = $backup;
+            unset($GLOBALS['wp_query'], $GLOBALS['wp_the_query']);
+            list($wpQuery, $wpTheQuery) = $backup;
+            $GLOBALS['wp_query'] = $wpQuery;
+            $GLOBALS['wp_the_query'] = $wpTheQuery;
         }
 
         return $result;

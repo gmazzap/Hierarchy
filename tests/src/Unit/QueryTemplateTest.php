@@ -10,6 +10,7 @@
 
 namespace GM\Hierarchy\Tests\Unit;
 
+use Andrew\Proxy;
 use Brain\Monkey\WP\Filters;
 use GM\Hierarchy\QueryTemplate;
 use GM\Hierarchy\Tests\TestCase;
@@ -83,5 +84,41 @@ class QueryTemplateTest extends TestCase
         $loader = new QueryTemplate($finder);
 
         assertSame('another', $loader->loadTemplate($wpQuery, true));
+    }
+
+    public function testApplyFilters()
+    {
+        define('DIE', 1);
+
+        $wpQuery = Mockery::mock('WP_Query');
+        $wpQuery->shouldReceive('is_main_query')->withNoArgs()->andReturn(true);
+
+        global $wp_query, $wp_the_query;
+        $wp_query = $wp_the_query = $wpQuery;
+        $customQuery = new \WP_Query();
+
+        // during filter, globals `$wp_query` and `$wp_the_query` are equal to custom query
+        Filters::expectApplied('test_filter')
+            ->once()
+            ->with('foo')
+            ->andReturnUsing(
+                function() use($customQuery) {
+                    assertSame($GLOBALS['wp_query'], $customQuery);
+                    assertSame($GLOBALS['wp_the_query'], $customQuery);
+
+                    return 'bar!';
+                }
+            );
+
+        $queryTemplate = new Proxy(new QueryTemplate());
+        $applied = $queryTemplate->applyFilter('test_filter', 'foo', $customQuery);
+
+        // after filter, globals `$wp_query` and `$wp_the_query` are restored
+
+        assertSame($GLOBALS['wp_query'], $wpQuery);
+        assertSame($GLOBALS['wp_the_query'], $wpQuery);
+        assertSame('bar!', $applied);
+
+        unset($wp_query, $wp_the_query);
     }
 }
