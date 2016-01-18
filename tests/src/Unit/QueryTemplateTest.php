@@ -12,9 +12,12 @@ namespace GM\Hierarchy\Tests\Unit;
 
 use Andrew\Proxy;
 use Brain\Monkey\WP\Filters;
+use Brain\Monkey\Functions;
 use GM\Hierarchy\QueryTemplate;
 use GM\Hierarchy\Tests\TestCase;
 use GM\Hierarchy\Finder\TemplateFinderInterface;
+use GM\Hierarchy\Loader\TemplateLoaderInterface;
+use GM\Hierarchy\Finder\FoldersTemplateFinder;
 use Mockery;
 
 /**
@@ -120,5 +123,77 @@ class QueryTemplateTest extends TestCase
         assertSame('bar!', $applied);
 
         unset($wp_query, $wp_the_query);
+    }
+
+    public function testMainQueryTemplateAllowedTrue()
+    {
+        Functions::when('is_robots')->justReturn(false);
+        Functions::when('is_feed')->justReturn(false);
+        Functions::when('is_trackback')->justReturn(false);
+        Functions::when('is_embed')->justReturn(false);
+
+        assertTrue(QueryTemplate::mainQueryTemplateAllowed());
+    }
+
+    public function testMainQueryTemplateAllowedFalseIsRobots()
+    {
+        Functions::when('is_robots')->justReturn(true);
+        Functions::when('is_feed')->justReturn(false);
+        Functions::when('is_trackback')->justReturn(false);
+        Functions::when('is_embed')->justReturn(false);
+
+        assertFalse(QueryTemplate::mainQueryTemplateAllowed());
+    }
+
+    public function testMainQueryTemplateAllowedFalseIsFeed()
+    {
+        Functions::when('is_robots')->justReturn(false);
+        Functions::when('is_feed')->justReturn(true);
+        Functions::when('is_trackback')->justReturn(false);
+        Functions::when('is_embed')->justReturn(false);
+
+        assertFalse(QueryTemplate::mainQueryTemplateAllowed());
+    }
+
+    public function testMainQueryTemplateAllowedFalseIsTrackback()
+    {
+        Functions::when('is_robots')->justReturn(false);
+        Functions::when('is_feed')->justReturn(false);
+        Functions::when('is_trackback')->justReturn(true);
+        Functions::when('is_embed')->justReturn(false);
+
+        assertFalse(QueryTemplate::mainQueryTemplateAllowed());
+    }
+
+    public function testMainQueryTemplateAllowedFalseIsEmbed()
+    {
+        Functions::when('is_robots')->justReturn(false);
+        Functions::when('is_feed')->justReturn(false);
+        Functions::when('is_trackback')->justReturn(false);
+        Functions::when('is_embed')->justReturn(true);
+
+        assertFalse(QueryTemplate::mainQueryTemplateAllowed());
+    }
+
+    public function testInstanceWithLoader()
+    {
+        $loader = Mockery::mock(TemplateLoaderInterface::class);
+        $instance = QueryTemplate::instanceWithLoader($loader);
+        $proxy = new Proxy($instance);
+
+        assertInstanceOf(QueryTemplate::class, $instance);
+        assertSame($loader, $proxy->loader);
+    }
+
+    public function instanceWithFolders()
+    {
+        $folders = [__DIR__];
+        $loader = Mockery::mock(TemplateLoaderInterface::class);
+        $instance = QueryTemplate::instanceWithFolders($folders, $loader);
+        $proxy = new Proxy($instance);
+
+        assertInstanceOf(QueryTemplate::class, $instance);
+        assertInstanceOf(FoldersTemplateFinder::class, $proxy->finder);
+        assertSame($loader, $proxy->loader);
     }
 }
