@@ -19,7 +19,7 @@ Hierarchy is package that aims to represent with PHP objects the WordPress templ
       - [Custom file extension](#custom-file-extension)
     - [`SubfolderTemplateFinder`](#subfoldertemplatefinder)
     - [`LocalizedTemplateFinder`](#localizedtemplatefinder)
-    - [`SymfonyFinderAdapter`](#symfonytemplatefinderadapter)
+    - [`SymfonyFinderAdapter`](#symfonyfinderadapter)
     - [`CallbackTemplateFinder`](#callbacktemplatefinder)
   - [Introducing Template Loaders](#introducing-template-loaders)
     - [`FileRequireLoader`](#filerequireloader)
