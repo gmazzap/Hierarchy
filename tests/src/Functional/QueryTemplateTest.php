@@ -13,7 +13,7 @@ namespace GM\Hierarchy\Tests\Functional;
 use Brain\Monkey\Functions;
 use GM\Hierarchy\Finder\FoldersTemplateFinder;
 use GM\Hierarchy\Finder\LocalizedTemplateFinder;
-use GM\Hierarchy\Finder\SymfonyTemplateFinderAdapter;
+use GM\Hierarchy\Finder\SymfonyFinderAdapter;
 use GM\Hierarchy\QueryTemplate;
 use GM\Hierarchy\Tests\TestCase;
 use Mockery;
@@ -65,7 +65,7 @@ class QueryTemplateTest extends TestCase
                ->ignoreUnreadableDirs(true)
                ->followLinks();
 
-        $loader = new QueryTemplate(new LocalizedTemplateFinder(new SymfonyTemplateFinderAdapter($finder)));
+        $loader = new QueryTemplate(new LocalizedTemplateFinder(new SymfonyFinderAdapter($finder)));
 
         assertSame('foo bar', $loader->loadTemplate($wpQuery));
     }

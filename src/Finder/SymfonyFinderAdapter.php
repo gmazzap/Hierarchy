@@ -20,7 +20,7 @@ use Symfony\Component\Finder\Finder;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-final class SymfonyTemplateFinderAdapter implements TemplateFinderInterface
+final class SymfonyFinderAdapter implements TemplateFinderInterface
 {
     use FindFirstTemplateTrait;
 
@@ -51,7 +51,7 @@ final class SymfonyTemplateFinderAdapter implements TemplateFinderInterface
 
     /**
      * @param  \Symfony\Component\Finder\Finder                  $finder
-     * @return \GM\Hierarchy\Finder\SymfonyTemplateFinderAdapter
+     * @return \GM\Hierarchy\Finder\SymfonyFinderAdapter
      */
     public function withSymfonyFinder(Finder $finder)
     {

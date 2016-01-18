@@ -19,7 +19,7 @@ Hierarchy is package that aims to represent with PHP objects the WordPress templ
       - [Custom file extension](#custom-file-extension)
     - [`SubfolderTemplateFinder`](#subfoldertemplatefinder)
     - [`LocalizedTemplateFinder`](#localizedtemplatefinder)
-    - [`SymfonyTemplateFinderAdapter`](#symfonytemplatefinderadapter)
+    - [`SymfonyFinderAdapter`](#symfonytemplatefinderadapter)
     - [`CallbackTemplateFinder`](#callbacktemplatefinder)
   - [Introducing Template Loaders](#introducing-template-loaders)
     - [`FileRequireLoader`](#filerequireloader)
@@ -313,7 +313,7 @@ Assuming the current locale is `it_IT`, using code above, the templates are sear
  - /path/to/parent/theme/ 
  
  
-#### `SymfonyTemplateFinderAdapter`
+#### `SymfonyFinderAdapter`
 
 This class allows to use the [Symfony Finder Component](http://symfony.com/doc/current/components/finder.html)
 to find the templates:
@@ -324,7 +324,7 @@ add_action( 'template_redirect', function() {
     $symfonyFinder = new \Symfony\Component\Finder\Finder();
     $symfonyFinder = $symfonyFinder->files()->in( __DIR__ )->name('*.phtml');
     
-    $finder = new \GM\Hierarchy\Finder\SymfonyTemplateFinderAdapter($symfonyFinder);
+    $finder = new \GM\Hierarchy\Finder\SymfonyFinderAdapter($symfonyFinder);
     
     $queryTemplate = \GM\Hierarchy\QueryTemplate( $finder ); 
     
