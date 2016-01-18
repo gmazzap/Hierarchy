@@ -6,6 +6,11 @@ $RECYCLE.BIN/
 .coverage
 .tox
 vendor/
-composer.lock
-.idea/
+/composer.lock
 build/
+.idea/
+<<<<<<< HEAD
+build/
+=======
+phpunit.xml
+>>>>>>> dev
