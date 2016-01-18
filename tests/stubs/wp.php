@@ -11,19 +11,17 @@
 
 class WP_Error
 {
-
 }
 
 class WP_Query
 {
-
     public $true;
     public $object;
 
     public function __construct(array $true = [], $object = null, array $vars = [])
     {
         $this->true = $true;
-        $this->object = $object ? : new \stdClass();
+        $this->object = $object ?: new \stdClass();
         $this->vars = $vars;
     }
 
@@ -39,7 +37,7 @@ class WP_Query
 
     public function __call($name, $arguments)
     {
-        if ( ! array_key_exists($name, $this->true)) {
+        if (! array_key_exists($name, $this->true)) {
             return false;
         }
 

@@ -23,7 +23,6 @@ use ArrayIterator;
  */
 final class FoldersTemplateFinder implements TemplateFinderInterface
 {
-
     use FindFirstTemplateTrait;
 
     /**

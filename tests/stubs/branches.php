@@ -15,7 +15,6 @@ use WP_Query;
 
 class BranchStubFoo implements BranchInterface
 {
-
     public function name()
     {
         return 'foo';
@@ -37,7 +36,6 @@ class BranchStubFoo implements BranchInterface
 
 class BranchStubBar implements BranchInterface
 {
-
     public function name()
     {
         return 'bar';
@@ -59,7 +57,6 @@ class BranchStubBar implements BranchInterface
 
 class BranchStubBar2 implements BranchInterface
 {
-
     public function name()
     {
         return 'bar';
@@ -81,7 +78,6 @@ class BranchStubBar2 implements BranchInterface
 
 class BranchStubBaz implements BranchInterface
 {
-
     public function name()
     {
         return 'baz';

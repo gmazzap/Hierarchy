@@ -105,7 +105,7 @@ class QueryTemplateTest extends TestCase
             ->once()
             ->with('foo')
             ->andReturnUsing(
-                function() use($customQuery) {
+                function () use ($customQuery) {
                     assertSame($GLOBALS['wp_query'], $customQuery);
                     assertSame($GLOBALS['wp_the_query'], $customQuery);
 

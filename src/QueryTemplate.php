@@ -33,7 +33,7 @@ class QueryTemplate implements QueryTemplateInterface
     private $loader;
 
     /**
-     * @param \GM\Hierarchy\Loader\TemplateLoaderInterface|null $loader
+     * @param  \GM\Hierarchy\Loader\TemplateLoaderInterface|null $loader
      * @return \GM\Hierarchy\QueryTemplate
      */
     public static function instanceWithLoader(TemplateLoaderInterface $loader = null)
@@ -42,8 +42,8 @@ class QueryTemplate implements QueryTemplateInterface
     }
 
     /**
-     * @param array                                             $folders
-     * @param \GM\Hierarchy\Loader\TemplateLoaderInterface|null $loader
+     * @param  array                                             $folders
+     * @param  \GM\Hierarchy\Loader\TemplateLoaderInterface|null $loader
      * @return \GM\Hierarchy\QueryTemplate
      */
     public static function instanceWithFolders(
@@ -56,8 +56,8 @@ class QueryTemplate implements QueryTemplateInterface
     /**
      * @return bool
      */
-    public static function mainQueryTemplateAllowed() {
-
+    public static function mainQueryTemplateAllowed()
+    {
         return
             (
                 filter_input(INPUT_SERVER, 'REQUEST_METHOD') !== 'HEAD'
