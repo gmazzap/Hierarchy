@@ -29,7 +29,7 @@ class HierarchyTest extends TestCase
         $branches = [
             Stubs\BranchStubFoo::class,  // leaves: ['foo', 'bar']
             Stubs\BranchStubBar::class,  // leaves: ['baz', 'bar']
-            Stubs\BranchStubBar2::class, // should be skipped because has same name of previos
+            Stubs\BranchStubBar2::class, // should be skipped because has same name of previous
             Stubs\BranchStubBaz::class,  // should be skipped because its is() always returns false
         ];
 

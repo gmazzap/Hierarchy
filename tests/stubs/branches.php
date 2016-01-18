@@ -11,24 +11,30 @@
 namespace GM\Hierarchy\Tests\Stubs;
 
 use GM\Hierarchy\Branch\BranchInterface;
-use WP_Query;
 
 class BranchStubFoo implements BranchInterface
 {
+
+    /**
+     * @inheritdoc
+     */
     public function name()
     {
         return 'foo';
     }
 
-    public function is(WP_Query $query)
+    /**
+     * @inheritdoc
+     */
+    public function is(\WP_Query $query)
     {
         return true;
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
-    public function leaves(WP_Query $query)
+    public function leaves(\WP_Query $query)
     {
         return ['foo', 'bar'];
     }
@@ -36,20 +42,26 @@ class BranchStubFoo implements BranchInterface
 
 class BranchStubBar implements BranchInterface
 {
+    /**
+     * @inheritdoc
+     */
     public function name()
     {
         return 'bar';
     }
 
-    public function is(WP_Query $query)
+    /**
+     * @inheritdoc
+     */
+    public function is(\WP_Query $query)
     {
         return true;
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
-    public function leaves(WP_Query $query)
+    public function leaves(\WP_Query $query)
     {
         return ['baz', 'bar'];
     }
@@ -57,20 +69,27 @@ class BranchStubBar implements BranchInterface
 
 class BranchStubBar2 implements BranchInterface
 {
+
+    /**
+     * @inheritdoc
+     */
     public function name()
     {
         return 'bar';
     }
 
-    public function is(WP_Query $query)
+    /**
+     * @inheritdoc
+     */
+    public function is(\WP_Query $query)
     {
         return true;
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
-    public function leaves(WP_Query $query)
+    public function leaves(\WP_Query $query)
     {
         return ['a', 'b', 'c'];
     }
@@ -78,20 +97,27 @@ class BranchStubBar2 implements BranchInterface
 
 class BranchStubBaz implements BranchInterface
 {
+
+    /**
+     * @inheritdoc
+     */
     public function name()
     {
         return 'baz';
     }
 
-    public function is(WP_Query $query)
+    /**
+     * @inheritdoc
+     */
+    public function is(\WP_Query $query)
     {
         return false;
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
-    public function leaves(WP_Query $query)
+    public function leaves(\WP_Query $query)
     {
         return ['1', '2', 3];
     }
