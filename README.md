@@ -206,7 +206,7 @@ add_action( 'template_redirect', function() {
 The snippet above replace every occurrence of `example.com` in the page content with `new.example.com`.
 
 If you are thinking using this method you can use a **template engine** to render templates... you are thinking well,
-but sthere's quite a lot more to know.
+but there's quite a lot more to know.
 
 
 ## Template Finders
@@ -346,8 +346,7 @@ This class can be used to easily integrate different loaders with `QueryTemplate
 
 In fact, you need to provide a callback that will be called to find templates.
 
-The callback will receive the template name without file extension, e.g. `index` and has to return
-
+The callback will receive the template name without file extension, e.g. `index` and has to return 
 the full path of the template if found, or an empty string if the template is not found.
 
 ```php
@@ -373,7 +372,7 @@ After a template is found with any of the finder classes, `QueryTemplate` has to
 By default, loading is just a `require` wrapped by `ob_start()` / `ob_get_clean()` so that the template
 content is just returned as is.
 
-However, is it possible to process the template in some ways, for example using a **template engine**.
+However, is it possible to _process_ the template in some ways, for example using a **template engine**.
 
 Custom template loaders have to implement `TemplateLoaderInterface` that has just one method: `load()`,
 that receives the full path of the template and have to **return** the template content.

@@ -33,7 +33,8 @@ interface QueryTemplateInterface
      *
      * @param  \WP_Query|null $query
      * @param  bool           $filters Pass the found template through filters?
+     * @param  bool           $found   It is set to true when template is found
      * @return string
      */
-    public function loadTemplate(\WP_Query $query = null, $filters = true);
+    public function loadTemplate(\WP_Query $query = null, $filters = true, &$found = false);
 }

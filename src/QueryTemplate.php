@@ -87,9 +87,7 @@ class QueryTemplate implements QueryTemplateInterface
      * If no WP_Query provided, global \WP_Query is used.
      * By default, found template passes through "{$type}_template" filter.
      *
-     * @param  \WP_Query $query
-     * @param  bool      $filters Pass the found template through filter?
-     * @return string
+     * @inheritdoc
      */
     public function findTemplate(\WP_Query $query = null, $filters = true)
     {
@@ -115,18 +113,15 @@ class QueryTemplate implements QueryTemplateInterface
      * If no WP_Query provided, global \WP_Query is used.
      * By default, found template passes through "{$type}_template" and "template_include" filters.
      *
-     * @param  \WP_Query|null $query
-     * @param  bool           $filters Pass the found template through filters?
-     * @return string
+     * @inheritdoc
      */
-    public function loadTemplate(\WP_Query $query = null, $filters = true)
+    public function loadTemplate(\WP_Query $query = null, $filters = true, &$found = false)
     {
         $template = $this->findTemplate($query, $filters);
         $filters and $template = $this->applyFilter('template_include', $template, $query);
+        $found = is_file($template) && is_readable($template);
 
-        return is_file($template) && is_readable($template)
-            ? $this->loader->load($template)
-            : '';
+        return $found ? $this->loader->load($template) : '';
     }
 
     /**
