@@ -15,7 +15,7 @@ namespace GM\Hierarchy;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-final class Hierarchy
+class Hierarchy
 {
     /**
      * @var array
