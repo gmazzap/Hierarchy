@@ -50,7 +50,7 @@ final class SymfonyFinderAdapter implements TemplateFinderInterface
     }
 
     /**
-     * @param  \Symfony\Component\Finder\Finder                  $finder
+     * @param  \Symfony\Component\Finder\Finder          $finder
      * @return \GM\Hierarchy\Finder\SymfonyFinderAdapter
      */
     public function withSymfonyFinder(Finder $finder)
