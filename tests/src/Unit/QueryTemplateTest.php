@@ -89,10 +89,42 @@ class QueryTemplateTest extends TestCase
         assertSame('another', $loader->loadTemplate($wpQuery, true));
     }
 
+    public function testLoadTemplateFoundFalse()
+    {
+        $wpQuery = new \WP_Query();
+
+        $finder = Mockery::mock(TemplateFinderInterface::class);
+        $finder->shouldReceive('findFirst')->once()->with(['index'], 'index')->andReturn('foo');
+
+        $found = true;
+
+        $loader = new QueryTemplate($finder);
+        $loaded = $loader->loadTemplate($wpQuery, false, $found);
+
+        assertFalse($found);
+        assertSame('', $loaded);
+    }
+
+    public function testLoadTemplateFoundTrue()
+    {
+        $wpQuery = new \WP_Query();
+
+        $template = getenv('HIERARCHY_TESTS_BASEPATH').'/files/page.php';
+
+        $finder = Mockery::mock(TemplateFinderInterface::class);
+        $finder->shouldReceive('findFirst')->once()->andReturn($template);
+
+        $found = false;
+
+        $loader = new QueryTemplate($finder);
+        $loaded = $loader->loadTemplate($wpQuery, false, $found);
+
+        assertTrue($found);
+        assertSame('page', $loaded);
+    }
+
     public function testApplyFilters()
     {
-        define('DIE', 1);
-
         $wpQuery = Mockery::mock('WP_Query');
         $wpQuery->shouldReceive('is_main_query')->withNoArgs()->andReturn(true);
 
