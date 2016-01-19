@@ -14,7 +14,6 @@ use GM\Hierarchy\Branch\BranchInterface;
 
 class BranchStubFoo implements BranchInterface
 {
-
     /**
      * @inheritdoc
      */
@@ -69,7 +68,6 @@ class BranchStubBar implements BranchInterface
 
 class BranchStubBar2 implements BranchInterface
 {
-
     /**
      * @inheritdoc
      */
@@ -97,7 +95,6 @@ class BranchStubBar2 implements BranchInterface
 
 class BranchStubBaz implements BranchInterface
 {
-
     /**
      * @inheritdoc
      */
