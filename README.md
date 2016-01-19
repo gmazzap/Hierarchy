@@ -5,6 +5,13 @@ Hierarchy
 
 ----------
 
+[![travis-ci status](https://img.shields.io/travis/Giuseppe-Mazzapica/Hierarchy.svg?style=flat-square)](https://travis-ci.org/Giuseppe-Mazzapica/Hierarchy)
+[![codecov.io](https://img.shields.io/codecov/c/github/Giuseppe-Mazzapica/Hierarchy.svg?style=flat-square)](http://codecov.io/github/Giuseppe-Mazzapica/Hierarchy?branch=master)
+[![license](https://img.shields.io/packagist/l/gmazzap/hierarchy.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+[![release](https://img.shields.io/github/release/Giuseppe-Mazzapica/Hierarchy.svg?style=flat-square)](https://github.com/Giuseppe-Mazzapica/Hierarchy/releases/latest)
+
+----------
+
 # TOC
 
 - [What / Why?](#what--why)
