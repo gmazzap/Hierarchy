@@ -20,7 +20,7 @@ use GM\Hierarchy\Loader\TemplateLoaderInterface;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-class QueryTemplate implements QueryTemplateInterface
+final class QueryTemplate implements QueryTemplateInterface
 {
     /**
      * @var \GM\Hierarchy\Finder\TemplateFinderInterface
