@@ -30,7 +30,7 @@ Hierarchy
     - [`CallbackTemplateFinder`](#callbacktemplatefinder)
   - [Introducing Template Loaders](#introducing-template-loaders)
     - [`FileRequireLoader`](#filerequireloader)
-  - [`QueryTemplate` Usage Example For Mustache Templates](#queryTemplate-usage-example-for-mustache-templates)
+  - [`QueryTemplate` Usage Example For Mustache Templates](#querytemplate-usage-example-for-mustache-templates)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Updating from 0.x releases](#updating-from-0x-releases)
