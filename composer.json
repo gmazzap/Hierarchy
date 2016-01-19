@@ -38,7 +38,7 @@
         },
         "files": [
             "./tests/stubs/wp.php",
-            "./tests/branches.php"
+            "./tests/stubs/branches.php"
         ]
     },
     "config":       {
