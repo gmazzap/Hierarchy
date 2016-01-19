@@ -30,7 +30,7 @@ Hierarchy
     - [`CallbackTemplateFinder`](#callbacktemplatefinder)
   - [Introducing Template Loaders](#introducing-template-loaders)
     - [`FileRequireLoader`](#filerequireloader)
-  - [Customized `QueryTemplate` Example](#customized-querytemplate-example)
+  - [`QueryTemplate` Usage Example For Mustache Templates](#queryTemplate-usage-example-for-mustache-templates)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Updating from 0.x releases](#updating-from-0x-releases)
@@ -43,24 +43,25 @@ Hierarchy
 
 Every WP developer knows that for every frontend request, WordPress runs a query and then loads a
 template file depending on the query.
-The template choose is done by rules defined in the [**template hierarchy**](https://developer.wordpress.org/themes/basics/template-hierarchy/#the-template-file-hierarchy).
 
-For very query, there's one template.
+The choose of template is done according to rules defined in the [**template hierarchy**](https://developer.wordpress.org/themes/basics/template-hierarchy/#the-template-file-hierarchy).
 
-Now, I want to ask you, given a query object, which is the function / method that gives you the template?
+For every query, there's one template.
 
-The answer is: **dosn't exist** such function or method.
+Now, I want to ask you: **given a query object, which is the function that gives you the template**?
 
-The query to template resolution is done by WordPress requiring the 
+The answer is: such function **dosn't exist**.
+
+The query-to-template resolution is done by WordPress requiring 
 [`template_loader.php`](https://github.com/WordPress/WordPress/blob/master/wp-includes/template-loader.php#L58-L79) file
 that contains a procedural succession of `if` / `elseif` that looks in template folder and try to find
 a template.
 
 It means:
 
- - There's no way to know which template belongs to a query before the template is loaded
- - There's no way to apply the query to template resolution to a query that is not a main query
- - Give a query, there's no way to know which templates WordPress will look for
+ - There's no way to know which template will be used for a query before the template is loaded
+ - There's no way to apply the query-to-template resolution to a query that is not the main query
+ - Given a query, there's no way to know which templates WordPress will look for
  
 **What this library does is to provide a way to do the 3 things listed above.**
  
@@ -86,7 +87,7 @@ the term "foo" is 123, the output of code above is:
 array(
   'category'  => array( 'category-foo', 'category-123', 'category' ),
   'archive'   => array( 'archive' ),
-  'paged'    => array( 'paged' ),
+  'paged'     => array( 'paged' ),
   'index'     => array( 'index' ),
 );
 ```
@@ -99,12 +100,12 @@ you can see that is an accurate representation of the template hierarchy for a c
 
 If the question you want to answer is:
 
-> Which templates WordPress will look for for this query?
+> Which templates WordPress will try to find for this query?
 
 It can be simply done using the `getTemplates()` method:
 
 ```php
-global $wp_query; // we will show template hierarchy for the main query
+global $wp_query; // we will target the main query
 
 $hierarchy = new GM\Hierarchy\Hierarchy();
 
@@ -131,7 +132,7 @@ That is the list of templates WordPress will search, in the same order that Word
 For this example, I will assume that a theme has template files stored in `templates` subfolder and
 using `.phtml` as file extension. 
 
-All the code necessary to load those templates following template hierarchy is this:
+All the code necessary to load those templates according to template hierarchy is the following:
 
 ```php
 add_action( 'template_redirect', function() {
@@ -154,8 +155,8 @@ purpose to load templates, this library provide a specific class: `QueryTemplate
 
 # Introducing `QueryTemplate`
 
-`QueryTemplate` class makes use of the `Hierarchy` class to get a list of templates to search for, then it looks
-for those template and loads the first found.
+`QueryTemplate` class makes use of the `Hierarchy` class to get a list of templates to search, then
+it looks for those templates and loads the first found.
 
 Example:
 
@@ -170,11 +171,11 @@ add_action( 'template_redirect', function() {
 } );
 ```
 
-What this code above does, is exactly what WordPress does: the proper template is found in theme folder
+What the code above does, is exactly what WordPress does: the proper template is found in theme folder
 and in parent theme folder (if current theme is a child theme) then the first template found is loaded
 and its content is output to page.
 
-However, it is **just the default behavior**, and it can be customised a lot.
+However, it is **just the default behavior**, and it can be customised.
 
 
 ### Template content is returned
@@ -205,12 +206,13 @@ add_action( 'template_redirect', function() {
 The snippet above replace every occurrence of `example.com` in the page content with `new.example.com`.
 
 If you are thinking using this method you can use a **template engine** to render templates... you are thinking well,
-but surprised are not finished yet.
+but sthere's quite a lot more to know.
 
 
 ## Template Finders
 
-By default, `QueryTemplate` class, search for templates in theme and parent theme folders.
+By default, `QueryTemplate` class, searches for templates in theme and parent theme folders.
+
 Just like WordPress does.
 
 However, it is possible to use a different template finder class to do something different.
@@ -229,10 +231,8 @@ Example:
 ```php
 add_action( 'template_redirect', function() {
 
-    $uploadDir = wp_upload_dir();
-
     $finder = \GM\Hierarchy\Finder\FoldersTemplateFinder([
-       $uploadDir['basedir']['templates'],
+       __DIR__,
        get_stylesheet_directory(),
        get_template_directory(),
     ]);
@@ -246,12 +246,12 @@ add_action( 'template_redirect', function() {
 } );
 ```
 
-The snippet above will search for templates in the subfolder `/templates` of the WordPress upload folder,
-and after that, if template is not found there, it is searched in theme and parent theme folders.
+The snippet above will search for templates in the current folder and if template is not found there,
+it is searched in theme and parent theme folders.
 
 ##### Custom file extension
 
-`FoldersTemplateFinder` class, by default search for files with `.php` extension, but is possible to 
+`FoldersTemplateFinder` class, by default, searches for files with `.php` extension, but is possible to 
 use a different files extension, passing it as second constructor argument:
 
 ```php
@@ -291,8 +291,8 @@ constructor argument.
 
 #### `LocalizedTemplateFinder`
 
-This finder class works in combination with another finder (it is a decorator) and allows to load
-templates based on the current locale, let's assume:
+This finder class works in combination with another finder and allows to load templates based on
+the current locale, let's assume:
 
 
 ```php
@@ -301,7 +301,7 @@ add_action( 'template_redirect', function() {
     // if no folders provided, theme and parent theme folders are used
     $foldersFinder = new \GM\Hierarchy\Finder\FoldersTemplateFinder();
     
-    $finder = new \GM\Hierarchy\Finder\LocalizedTemplateFinder($foldersFinder);
+    $finder = new \GM\Hierarchy\Finder\LocalizedTemplateFinder( $foldersFinder );
     
     $queryTemplate = \GM\Hierarchy\QueryTemplate( $finder ); 
     
@@ -331,7 +331,7 @@ add_action( 'template_redirect', function() {
     $symfonyFinder = new \Symfony\Component\Finder\Finder();
     $symfonyFinder = $symfonyFinder->files()->in( __DIR__ )->name('*.phtml');
     
-    $finder = new \GM\Hierarchy\Finder\SymfonyFinderAdapter($symfonyFinder);
+    $finder = new \GM\Hierarchy\Finder\SymfonyFinderAdapter( $symfonyFinder );
     
     $queryTemplate = \GM\Hierarchy\QueryTemplate( $finder ); 
     
@@ -344,20 +344,20 @@ add_action( 'template_redirect', function() {
 
 This class can be used to easily integrate different loaders with `QueryTemplate` class.
 
-In fact, you need to provide a callback that will be called to find the template.
+In fact, you need to provide a callback that will be called to find templates.
 
 The callback will receive the template name without file extension, e.g. `index` and has to return
 
-the full path of the template if is found, or an empty string if the template is not found.
+the full path of the template if found, or an empty string if the template is not found.
 
 ```php
 add_action( 'template_redirect', function() {
 
-    $callback = function($template) {       
+    $callback = function( $template ) {       
        return realpath(__DIR__ . $template . '.php') ? : '';
     };
     
-    $finder = new \GM\Hierarchy\Finder\CallbackTemplateFinder($callback);
+    $finder = new \GM\Hierarchy\Finder\CallbackTemplateFinder( $callback );
     
     $queryTemplate = \GM\Hierarchy\QueryTemplate( $finder ); 
     
@@ -368,14 +368,14 @@ add_action( 'template_redirect', function() {
 
 ## Introducing Template Loaders
 
-After a template is found with any of the finder, `QueryTemplate` has to "load" it.
+After a template is found with any of the finder classes, `QueryTemplate` has to "load" it.
 
 By default, loading is just a `require` wrapped by `ob_start()` / `ob_get_clean()` so that the template
 content is just returned as is.
 
 However, is it possible to process the template in some ways, for example using a **template engine**.
 
-Custom template loaders have to implements `TemplateLoaderInterface`, it has just one method: `load()`,
+Custom template loaders have to implement `TemplateLoaderInterface` that has just one method: `load()`,
 that receives the full path of the template and have to **return** the template content.
 
 Template loaders can be passed as second constructor argument for `QueryTemplate`.
@@ -383,10 +383,10 @@ Template loaders can be passed as second constructor argument for `QueryTemplate
 
 #### `FileRequireLoader`
 
-This is the unique loader class that ships with the library, and it provide the default behavior.
+This is the unique loader class that ships with the library, and it provides the default behavior.
 
 
-## Customized `QueryTemplate` Example
+## `QueryTemplate` Usage Example For Mustache Templates
 
 In the following example I will create a loader that renders the template using the PHP implementation of
 [Mustache template engine](https://github.com/bobthecow/mustache.php):
@@ -416,13 +416,23 @@ class MustacheLoader implements TemplateLoaderInterface  {
 
 add_action( 'template_redirect', function() {
     
+    // will look for "*.mustache" templates in "/templates" subfolder of theme
     $finder = new SubfolderTemplateFinder('templates', 'mustache');
+    
+    // make use of the class above
     $loader = new MustacheLoader( new Mustache_Engine() ); 
     
     $queryTemplate = \GM\Hierarchy\QueryTemplate( $finder, $loader ); 
     
-    echo $queryTemplate->loadTemplate();
-    exit();
+    // load the rendered template
+    $content = $queryTemplate->loadTemplate();
+    
+    // if content isn't empty, output it and exit, otherwise WordPress will continue its work
+    if ( trim( $content ) ) {
+        echo $content;
+        exit();
+    }
+      
 } );
 ```
 
@@ -433,12 +443,12 @@ Hierarchy requires **PHP 5.5+** and [Composer](https://getcomposer.org/) to be i
 
 # Installation
 
-Best served by Composer with name `gmazzap/hierarchy`.
+Best served by Composer, package name is `gmazzap/hierarchy`.
 
  
 # Updating from 0.x releases
 
-The current version 1.0 is **incompatible** with 0.x releases.
+The 1.x versions are **incompatible** with 0.x releases.
 
 Generally speaking:
 
@@ -451,7 +461,7 @@ Generally speaking:
 ### 0.x Maintenance
 
 I'll try to update 0.x releases, if any bug is found or if something is changed in WordPress 
-(e.g. when the new `singular.php` template was added) but I will not add new features there.
+(e.g. when the new `singular.php` template was added), but I will not add new features there.
 
 
 # License
