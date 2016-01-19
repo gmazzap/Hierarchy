@@ -22,6 +22,7 @@ use GM\Hierarchy\Hierarchy;
  */
 class HierarchyTest extends TestCase
 {
+
     public function testParse()
     {
         $hierarchy = new Hierarchy();
@@ -69,5 +70,15 @@ class HierarchyTest extends TestCase
         foreach ($classes as $class) {
             assertInstanceOf(BranchInterface::class, new $class());
         }
+    }
+
+    public function testGetHierarchy()
+    {
+        assertSame(['index' => ['index']], (new Hierarchy())->getHierarchy(new \WP_Query()));
+    }
+
+    public function testGetTemplates()
+    {
+        assertSame(['index'], (new Hierarchy())->getTemplates(new \WP_Query()));
     }
 }
