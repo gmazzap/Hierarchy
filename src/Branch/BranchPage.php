@@ -45,7 +45,7 @@ final class BranchPage implements BranchInterface
         $pagename = $query->get('pagename');
 
         if (empty($post->post_name) && empty($pagename)) {
-            return ['page', 'singular'];
+            return ['page'];
         }
 
         $name = $pagename ? $pagename : $post->post_name;
@@ -54,7 +54,6 @@ final class BranchPage implements BranchInterface
             "page-{$name}",
             "page-{$post->ID}",
             'page',
-            'singular',
         ];
 
         $template = $post->post_type === 'page'

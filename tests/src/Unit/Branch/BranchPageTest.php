@@ -33,7 +33,7 @@ final class BranchPageTest extends TestCase
 
         $branch = new BranchPage();
 
-        assertSame(['page', 'singular'], $branch->leaves($query));
+        assertSame(['page'], $branch->leaves($query));
     }
 
     public function testLeavesNoPage()
@@ -48,7 +48,7 @@ final class BranchPageTest extends TestCase
 
         $branch = new BranchPage();
 
-        assertSame(['page-foo', 'page-0', 'page', 'singular'], $branch->leaves($query));
+        assertSame(['page-foo', 'page-0', 'page'], $branch->leaves($query));
     }
 
     public function testLeavesPage()
@@ -62,7 +62,7 @@ final class BranchPageTest extends TestCase
         Functions::expect('get_page_template_slug')->with($post)->andReturn('');
 
         $branch = new BranchPage();
-        assertSame(['page-foo', 'page-1', 'page', 'singular'], $branch->leaves($query));
+        assertSame(['page-foo', 'page-1', 'page'], $branch->leaves($query));
     }
 
     public function testLeavesPagePagename()
@@ -77,7 +77,7 @@ final class BranchPageTest extends TestCase
 
         $branch = new BranchPage();
 
-        assertSame(['page-bar', 'page-1', 'page', 'singular'], $branch->leaves($query));
+        assertSame(['page-bar', 'page-1', 'page'], $branch->leaves($query));
     }
 
     public function testLeavesPagePagenameTemplate()
@@ -93,7 +93,7 @@ final class BranchPageTest extends TestCase
 
         $branch = new BranchPage();
 
-        assertSame(['page-meh', 'page-bar', 'page-1', 'page', 'singular'], $branch->leaves($query));
+        assertSame(['page-meh', 'page-bar', 'page-1', 'page'], $branch->leaves($query));
     }
 
     public function testLeavesPagePagenameTemplateFolder()
@@ -109,7 +109,7 @@ final class BranchPageTest extends TestCase
 
         $branch = new BranchPage();
 
-        $expected = ['page-templates/page-meh', 'page-bar', 'page-1', 'page', 'singular'];
+        $expected = ['page-templates/page-meh', 'page-bar', 'page-1', 'page'];
 
         assertSame($expected, $branch->leaves($query));
     }
@@ -127,6 +127,6 @@ final class BranchPageTest extends TestCase
 
         $branch = new BranchPage();
 
-        assertSame(['page-bar', 'page-1', 'page', 'singular'], $branch->leaves($query));
+        assertSame(['page-bar', 'page-1', 'page'], $branch->leaves($query));
     }
 }
