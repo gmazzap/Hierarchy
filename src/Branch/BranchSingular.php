@@ -15,14 +15,14 @@ namespace GM\Hierarchy\Branch;
  * @license http://opensource.org/licenses/MIT MIT
  * @package Hierarchy
  */
-final class BranchSingle implements BranchInterface
+final class BranchSingular implements BranchInterface
 {
     /**
      * @inheritdoc
      */
     public function name()
     {
-        return 'single';
+        return 'singular';
     }
 
     /**
@@ -30,7 +30,7 @@ final class BranchSingle implements BranchInterface
      */
     public function is(\WP_Query $query)
     {
-        return $query->is_single();
+        return $query->is_singular();
     }
 
     /**
@@ -38,12 +38,6 @@ final class BranchSingle implements BranchInterface
      */
     public function leaves(\WP_Query $query)
     {
-        /** @var \WP_Post $post */
-        $post = $query->get_queried_object();
-        $post instanceof \WP_Post or $post = new \WP_Post((object) ['ID' => 0]);
-
-        $leaves = empty($post->ID) ? ['single'] : ["single-{$post->post_type}", 'single'];
-
-        return $leaves;
+        return ['singular'];
     }
 }

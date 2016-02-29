@@ -30,7 +30,7 @@ final class BranchSingleTest extends TestCase
 
         $branch = new BranchSingle();
 
-        assertSame(['single', 'singular'], $branch->leaves($query));
+        assertSame(['single'], $branch->leaves($query));
     }
 
     public function testLeaves()
@@ -42,6 +42,6 @@ final class BranchSingleTest extends TestCase
 
         $branch = new BranchSingle();
 
-        assertSame(['single-my_cpt', 'single', 'singular'], $branch->leaves($query));
+        assertSame(['single-my_cpt', 'single'], $branch->leaves($query));
     }
 }

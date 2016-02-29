@@ -44,6 +44,20 @@ class QueryTemplateTest extends TestCase
         assertSame('page custom', $loader->loadTemplate($wpQuery));
     }
 
+    public function testLoadPageSingular()
+    {
+        $post = Mockery::mock('\WP_Post');
+        $post->ID = 1;
+        $post->post_type = 'page';
+
+        $wpQuery = new \WP_Query(['is_page' => true, 'is_singular' => true], $post);
+
+        $folders = [getenv('HIERARCHY_TESTS_BASEPATH').'/files'];
+        $loader = new QueryTemplate(new FoldersTemplateFinder($folders, 'twig'));
+
+        assertSame('singular', $loader->loadTemplate($wpQuery));
+    }
+
     public function testLocalizedTaxonomy()
     {
         Functions::when('get_stylesheet_directory')->alias(function () {

@@ -30,6 +30,7 @@ class Hierarchy
         Branch\BranchAttachment::class,
         Branch\BranchSingle::class,
         Branch\BranchPage::class,
+        Branch\BranchSingular::class,
         Branch\BranchCategory::class,
         Branch\BranchTag::class,
         Branch\BranchAuthor::class,
