@@ -41,11 +41,5 @@
     },
     "config":       {
         "optimize-autoloader": true
-    },
-    "extra":        {
-        "branch-alias": {
-            "dev-legacy": "0.2.x-dev",
-            "dev-master": "1.0.x-dev"
-        }
     }
 }
