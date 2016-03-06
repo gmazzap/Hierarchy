@@ -1,6 +1,6 @@
 {
-    "name":         "brain/hierarchy",
-    "description":  "No-dependencies package that embodies WordPress template hierarchy",
+    "name":         "gmazzap/hierarchy",
+    "description":  "*Virtual* WordPress Template Hierarchy",
     "keywords":     [
         "wordpress"
     ],
@@ -41,11 +41,5 @@
     },
     "config":       {
         "optimize-autoloader": true
-    },
-    "extra":        {
-        "branch-alias": {
-            "dev-master": "1.1.x-dev",
-            "dev-dev":    "1.2.x-dev"
-        }
     }
 }
