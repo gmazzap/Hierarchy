@@ -5,10 +5,10 @@ Hierarchy
 
 ----------
 
-[![travis-ci status](https://img.shields.io/travis/Giuseppe-Mazzapica/Hierarchy.svg?style=flat-square)](https://travis-ci.org/Giuseppe-Mazzapica/Hierarchy)
-[![codecov.io](https://img.shields.io/codecov/c/github/Giuseppe-Mazzapica/Hierarchy.svg?style=flat-square)](http://codecov.io/github/Giuseppe-Mazzapica/Hierarchy?branch=master)
-[![license](https://img.shields.io/packagist/l/gmazzap/hierarchy.svg?style=flat-square)](http://opensource.org/licenses/MIT)
-[![release](https://img.shields.io/github/release/Giuseppe-Mazzapica/Hierarchy.svg?style=flat-square)](https://github.com/Giuseppe-Mazzapica/Hierarchy/releases/latest)
+[![travis-ci status](https://img.shields.io/travis/Brain-WP/Hierarchy.svg?style=flat-square)](https://travis-ci.org/Brain-WP/Hierarchy)
+[![codecov.io](https://img.shields.io/codecov/c/github/Brain-WP/Hierarchy.svg?style=flat-square)](http://codecov.io/github/Brain-WP/Hierarchy?branch=master)
+[![license](https://img.shields.io/packagist/l/brain/hierarchy.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+[![release](https://img.shields.io/github/release/Brain-WP/Hierarchy.svg?style=flat-square)](https://github.com/Brain-WP/Hierarchy/releases/latest)
 
 ----------
 

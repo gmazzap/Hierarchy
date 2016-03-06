@@ -1,6 +1,6 @@
 {
     "name":         "brain/hierarchy",
-    "description":  "No-dependencies class that embodies WordPress template hierarchy",
+    "description":  "No-dependencies package that embodies WordPress template hierarchy",
     "keywords":     [
         "wordpress"
     ],
@@ -12,8 +12,8 @@
         }
     ],
     "support":      {
-        "issues": "https://github.com/Giuseppe-Mazzapica/Hierarchy/issues",
-        "source": "https://github.com/Giuseppe-Mazzapica/Hierarchy"
+        "issues": "https://github.com/Brain-WP/Hierarchy/issues",
+        "source": "https://github.com/Brain-WP/Hierarchy/Hierarchy"
     },
     "require":      {
         "php": ">=5.5"
